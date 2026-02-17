@@ -1,0 +1,60 @@
+@import '../utils/variables';
+
+.Modal {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 30px;
+  width: 410px;
+  height: 214px;
+  box-shadow: 10px 10px 30px 0 rgba(82, 85, 95, 0.4);
+  background: getColor('white');
+
+  &Close {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+
+  &Title {
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    text-align: center;
+    color: getColor('gray');
+    margin-top: 20px;
+  }
+
+  &ListBtn {
+    display: flex;
+    column-gap: 15px;
+    margin-top: 20px;
+    justify-content: center;
+  }
+
+  &Btn {
+    border: 2px solid getColor('dark-white');
+    border-radius: 16px;
+    width: 145px;
+    height: 54px;
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    text-align: center;
+    color: getColor('gray');
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      background 0.9s ease,
+      color 0.7s ease;
+
+    &:hover {
+      background: getColor('orange');
+      color: getColor('white');
+    }
+  }
+}

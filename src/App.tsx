@@ -1,6 +1,11 @@
+import Modal from "./components/Modal/Modal"
+
 function App() {
   return (
-    <div></div>
+    <div>
+      {/* <Modal title="Ви впевнені?" onClickTrue={() => {}} onClickFalse={() => {}} />
+      <Modal title="Ви дійсно хочете вийти?" onClickTrue={() => {}} onClickFalse={() => {}} /> */}
+    </div>
   )
 }
 
