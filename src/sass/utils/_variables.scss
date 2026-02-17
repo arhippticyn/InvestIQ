@@ -1,11 +1,12 @@
 $colors: (
   'black': #111,
   'dark-purple': #1e1823,
-  'orange': #fd9222,
+  'orange': #FF751D,
   'white': #fff,
   'red':#EB5757,
   'gray':#52555F,
-  'dark-white':#F5F6FB
+  'dark-white':#F5F6FB,
+  'green':#407946
 );
 @function getColor($key) {
   @return map-get($colors, $key);
