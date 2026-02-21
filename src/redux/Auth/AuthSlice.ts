@@ -36,16 +36,17 @@ const authSlice = createSlice({
 export const { setUser, setLoading, setError, logoutUser } = authSlice.actions;
 export default authSlice.reducer;
 
-export const login = (email: string, password: string) => async (dispatch) => {
-  dispatch(setLoading());
+export const login =
+  (email: string, password: string) => async (dispatch: any) => {
+    dispatch(setLoading());
 
-  try {
-    await api.post("auth/login", { email, password });
+    try {
+      await api.post("auth/login", { email, password });
 
-    const response = await api.get("auth/users/me");
+      const response = await api.get("auth/users/me");
 
-    dispatch(setUser(response.data));
-  } catch (error) {
-    dispatch(setError("Невірний емейл або пароль"));
-  }
-};
+      dispatch(setUser(response.data));
+    } catch (error) {
+      dispatch(setError("Невірний емейл або пароль"));
+    }
+  };
