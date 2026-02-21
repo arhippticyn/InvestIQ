@@ -1,35 +1,42 @@
 html {
-    scroll-behavior: smooth;
-    font-size: 18px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Roboto";
+  font-size: 12px;
+  font-weight: 400;
+  line-height: calc(14 / 12);
+  color: getColor("black");
 }
 
 a,
 button,
 input {
-    outline: none;
+  outline: none;
 }
 
 button {
-    display: block;
-    cursor: pointer;
-    border: none;
+  display: block;
+  cursor: pointer;
+  border: none;
 }
 
 img {
-    display: block;
-    width: 100%;
-    height: auto;
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 input {
-    outline: none;
-    border: none;
+  outline: none;
+  border: none;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 li {
-    list-style-type: none;
+  list-style-type: none;
 }
