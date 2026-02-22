@@ -1,0 +1,28 @@
+.logoText {
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding-left: 20px;
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    display: flex;
+    align-self: flex-end;
+    width: 39px;
+    height: 31px;
+    background-image: url("../../assets/logo.svg");
+    background-size: contain;
+    z-index: -1;
+  }
+}
+.imgContainer {
+  width: 99px;
+  height: 31px;
+  display: flex;
+  align-items: center;
+}
