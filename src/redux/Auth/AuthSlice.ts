@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { api } from "../../api/api";
-
+import type { AppDispatch } from "../store";
 const initialState = {
   user: null,
   isLoading: false,
@@ -37,13 +37,13 @@ export const { setUser, setLoading, setError, logoutUser } = authSlice.actions;
 export default authSlice.reducer;
 
 export const login =
-  (email: string, password: string) => async (dispatch: any) => {
+  (email: string, password: string) => async (dispatch: AppDispatch) => {
     dispatch(setLoading());
 
     try {
-      await api.post("auth/login", { email, password });
+      await api.post("/auth/login", { email, password });
 
-      const response = await api.get("auth/users/me");
+      const response = await api.get("/auth/users/me");
 
       dispatch(setUser(response.data));
     } catch (error) {
