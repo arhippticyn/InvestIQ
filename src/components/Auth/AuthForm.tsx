@@ -50,13 +50,16 @@ export const AuthForm = () => {
       <form className={styles.form} onSubmit={handleSubmit(onLogin)}>
         <div className={styles.formEmailContainer}>
           <label className={styles.label}>
-            Електронна пошта:
+            <div className={styles.labelContainer}>
+              {errors.email && <p className={styles.required}>*</p>}Електронна
+              пошта:
+            </div>{" "}
             <input
               className={styles.input}
               type="email"
               placeholder="your@email.com"
               {...register("email", {
-                required: "Введіть email",
+                required: "Це обов'язкове поле",
                 pattern: {
                   value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                   message: "Невірний формат email",
@@ -71,21 +74,23 @@ export const AuthForm = () => {
 
         <div className={styles.formPasswordContainer}>
           <label className={styles.label}>
-            Пароль:
+            <div className={styles.labelContainer}>
+              {errors.password && <p className={styles.required}>*</p>}Пароль:
+            </div>
             <input
               className={styles.input}
               type="password"
               placeholder="Пароль"
               {...register("password", {
-                required: "Введіть пароль",
+                required: "Це обов'язкове поле",
                 minLength: { value: 6, message: "Мінімум 6 символів" },
               })}
             />
           </label>
+          {errors.password && (
+            <p className={styles.fieldError}>{errors.password.message}</p>
+          )}
         </div>
-        {errors.password && (
-          <p className={styles.fieldError}>{errors.password.message}</p>
-        )}
 
         {auth.error && <p className={styles.error}>{auth.error}</p>}
 
