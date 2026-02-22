@@ -1,15 +1,12 @@
-import { useState } from "react";
-import styles from "../../sass/components/AuthForm.module.scss";
 import { useForm } from "react-hook-form";
-
-import { login } from "../../redux/Auth/AuthSlice";
+import styles from "../../sass/components/AuthForm.module.scss";
 
 import {
   useTypificatedSelector,
   useTypificatedDispatch,
 } from "../../hooks/hooks";
 
-import { setUser, setLoading, setError } from "../../redux/Auth/AuthSlice";
+import { login, registerUser } from "../../redux/Auth/AuthSlice";
 
 type FormValues = {
   email: string;
@@ -29,73 +26,77 @@ export const AuthForm = () => {
     mode: "onSubmit",
   });
 
-  const onSubmit = (data: FormValues) => {
+  const onLogin = (data: FormValues) => {
     dispatch(login(data.email, data.password));
   };
 
-  const onRegister = (data: FormValues) => {};
+  const onRegister = (data: FormValues) => {
+    dispatch(registerUser(data.email, data.password));
+  };
+
   return (
-    <>
-      <div className={styles.section}>
-        <p className={styles.googleText}>
-          Ви можете авторизуватися за допомогою акаунта Google
-        </p>
-        <p className={styles.loginText}>
-          Або увійти за допомогою ел. пошти та праолю після реєстрації
-        </p>
-        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-          <label className={styles.label}>
-            Електронна пошта:
-            <input
-              className={styles.input}
-              type="email"
-              placeholder="your@email.com"
-              {...register("email", {
-                required: "Введіть email",
-              })}
-            />
-          </label>
+    <div className={styles.section}>
+      <p className={styles.loginText}>
+        Або увійти за допомогою ел. пошти та паролю після реєстрації
+      </p>
 
-          {errors.email && (
-            <p className={styles.fieldError}>{errors.email.message}</p>
-          )}
+      <form className={styles.form} onSubmit={handleSubmit(onLogin)}>
+        <label className={styles.label}>
+          Електронна пошта:
+          <input
+            className={styles.input}
+            type="email"
+            placeholder="your@email.com"
+            {...register("email", {
+              required: "Введіть email",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Невірний формат email",
+              },
+            })}
+          />
+        </label>
+        {errors.email && (
+          <p className={styles.fieldError}>{errors.email.message}</p>
+        )}
 
-          <label className={styles.label}>
-            Пароль:
-            <input
-              className={styles.input}
-              type="password"
-              {...register("password", {
-                required: "Введіть пароль",
-                minLength: {
-                  value: 4,
-                  message: "Мінімум 4 символи",
-                },
-              })}
-            />
-          </label>
+        <label className={styles.label}>
+          Пароль:
+          <input
+            className={styles.input}
+            type="password"
+            placeholder="Пароль"
+            {...register("password", {
+              required: "Введіть пароль",
+              minLength: { value: 6, message: "Мінімум 6 символів" },
+            })}
+          />
+        </label>
+        {errors.password && (
+          <p className={styles.fieldError}>{errors.password.message}</p>
+        )}
 
-          {errors.password && (
-            <p className={styles.fieldError}>{errors.password.message}</p>
-          )}
+        {auth.error && <p className={styles.error}>{auth.error}</p>}
 
-          {auth.error && <p className={styles.error}>{auth.error}</p>}
+        <div className={styles.actions}>
+          <button
+            type="submit"
+            className={styles.btnPrimary}
+            disabled={auth.isLoading}
+          >
+            {auth.isLoading ? "..." : "Увійти"}
+          </button>
 
-          <div className={styles.actions}>
-            <button
-              type="submit"
-              className={styles.btnPrimary}
-              disabled={auth.isLoading}
-            >
-              {auth.isLoading ? "..." : "УВІЙТИ"}
-            </button>
-
-            <button type="button" className={styles.btnSecondary}>
-              РЕЄСТРАЦІЯ
-            </button>
-          </div>
-        </form>{" "}
-      </div>
-    </>
+          <button
+            type="button"
+            className={styles.btnSecondary}
+            disabled={auth.isLoading}
+            onClick={handleSubmit(onRegister)}
+          >
+            Реєстрація
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
