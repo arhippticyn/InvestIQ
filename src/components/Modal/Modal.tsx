@@ -44,3 +44,5 @@ const Modal: React.FC<ModalProps> = ({ title, onClickTrue, onClickFalse }) => {
 }
 
 export default Modal
+
+
