@@ -1,15 +1,15 @@
-@use "../utils/variables";
+@use '../utils/variables';
 
 .section {
   padding: 40px 29px 53px;
   max-width: 300px;
-  box-shadow: variables.getColor("menu-shadow");
+  box-shadow: variables.getColor('menu-shadow');
   border-radius: 30px;
   margin: 0 auto;
 }
 
 .formText {
-  color: variables.getColor("text-secondary");
+  color: variables.getColor('text-secondary');
 }
 
 .loginText {
@@ -59,15 +59,15 @@
 }
 
 .buttonPrimary {
-  box-shadow: variables.getColor("buttonAccent-shadow");
-  background-color: variables.getColor("accent-color");
-  color: variables.getColor("white-primary");
+  box-shadow: variables.getColor('buttonAccent-shadow');
+  background-color: variables.getColor('accent-color');
+  color: variables.getColor('white-primary');
   padding: 12px 34px;
 }
 
 .buttonSecondary {
-  box-shadow: variables.getColor("buttonRegister-shadow");
-  color: variables.getColor("text-secondary");
+  box-shadow: variables.getColor('buttonRegister-shadow');
+  color: variables.getColor('text-secondary');
   padding: 12px 15px;
 }
 
@@ -76,12 +76,40 @@
 }
 
 .required {
-  color: variables.getColor("error");
+  color: variables.getColor('error');
 }
 
 .fieldError {
-  color: variables.getColor("error");
+  color: variables.getColor('error');
   font-size: 10px;
+}
+
+.BtnGoogle {
+  min-width: 122px;
+  min-height: 40px;
+  box-shadow: 1px 2px 3px 0 rgba(170, 178, 197, 0.2);
+  border-radius: 26px;
+  background: variables.getColor('white-secondary');
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: variables.getColor('text-primary');
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  column-gap: 5px;
+}
+
+.BtnGoogleContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 0px;
+}
+
+.BtnGoogleImg {
+  min-width: 25px;
+  min-height: 28px;
 }
 
 @media (min-width: 768px) {
@@ -94,6 +122,7 @@
     max-width: 265px;
     text-align: left;
   }
+
 }
 
 @media (min-width: 1280px) {

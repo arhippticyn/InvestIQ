@@ -1,78 +1,62 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { api } from "../../api/api";
-import type { AppDispatch } from "../store";
-import type { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit'
+import type { PayloadAction } from '@reduxjs/toolkit'
+import { loginUser, registerUser } from './AuthOperation'
 
-type User = { id: number; email: string; username: string };
+type User = { id: number; email: string; username: string }
 
 type AuthState = {
-  user: User | null;
-  isLoading: boolean;
-  error: string | null;
-};
+  token: string
+  user: User | null
+  isLoading: boolean
+  isLogin: boolean
+  error: string | null
+}
 
 const initialState: AuthState = {
+  token: '',
   user: null,
   isLoading: false,
+  isLogin: false,
   error: null,
-};
+}
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState: initialState,
   reducers: {
-    setUser(state, action: PayloadAction<User>) {
-      state.isLoading = false;
-      state.user = action.payload;
-      state.error = null;
-    },
-
-    setLoading(state) {
-      state.isLoading = true;
-      state.error = null;
-    },
-
-    setError(state, action: PayloadAction<string>) {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
-
     logoutUser(state) {
-      state.user = null;
+      state.user = null
     },
   },
-});
 
-export const { setUser, setLoading, setError, logoutUser } = authSlice.actions;
-export default authSlice.reducer;
+  extraReducers: builder => {
+    builder
+      .addCase(registerUser.pending, state => {
+        state.isLoading = true
+      })
+      .addCase(registerUser.fulfilled, (state, action: PayloadAction<User>) => {
+        state.isLoading = false
+        state.user = action.payload
+        state.isLogin = true
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = (action.payload as string) || 'Error'
+      })
+      .addCase(loginUser.pending, state => {
+        state.isLoading = true
+      })
+      .addCase(loginUser.fulfilled, (state, action: PayloadAction<User>) => {
+        state.isLoading = false
+        state.user = action.payload
+        state.isLogin = true
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = (action.payload as string) || 'Error'
+      })
+  },
+})
 
-export const login =
-  (email: string, password: string) => async (dispatch: AppDispatch) => {
-    dispatch(setLoading());
-
-    try {
-      await api.post("/auth/login", { email, password });
-
-      const response = await api.get("/auth/users/me");
-
-      dispatch(setUser(response.data));
-    } catch (error) {
-      dispatch(setError("Невірний емейл або пароль"));
-    }
-  };
-
-export const registerUser =
-  (email: string, password: string) => async (dispatch: AppDispatch) => {
-    dispatch(setLoading());
-
-    try {
-      const response = await api.post("/auth/register", {
-        email,
-        password,
-      });
-
-      dispatch(setUser(response.data));
-    } catch (error) {
-      dispatch(setError("Реєстрація неуспішна, повторіть спробу пізніше"));
-    }
-  };
+export const { logoutUser } = authSlice.actions
+export default authSlice.reducer
