@@ -36,52 +36,63 @@ export const AuthForm = () => {
 
   return (
     <div className={styles.section}>
-      <p className={styles.loginText}>
+      <div className={styles.googleTextContainer}>
+        <p className={styles.formText}>
+          Ви можете авторизуватися за допомогою акаунта Google
+        </p>
+      </div>
+
+      {/* місце під гугл */}
+
+      <p className={`${styles.formText} ${styles.loginText}`}>
         Або увійти за допомогою ел. пошти та паролю після реєстрації
       </p>
-
       <form className={styles.form} onSubmit={handleSubmit(onLogin)}>
-        <label className={styles.label}>
-          Електронна пошта:
-          <input
-            className={styles.input}
-            type="email"
-            placeholder="your@email.com"
-            {...register("email", {
-              required: "Введіть email",
-              pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: "Невірний формат email",
-              },
-            })}
-          />
-        </label>
-        {errors.email && (
-          <p className={styles.fieldError}>{errors.email.message}</p>
-        )}
+        <div className={styles.formEmailContainer}>
+          <label className={styles.label}>
+            Електронна пошта:
+            <input
+              className={styles.input}
+              type="email"
+              placeholder="your@email.com"
+              {...register("email", {
+                required: "Введіть email",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Невірний формат email",
+                },
+              })}
+            />
+          </label>
+          {errors.email && (
+            <p className={styles.fieldError}>{errors.email.message}</p>
+          )}
+        </div>
 
-        <label className={styles.label}>
-          Пароль:
-          <input
-            className={styles.input}
-            type="password"
-            placeholder="Пароль"
-            {...register("password", {
-              required: "Введіть пароль",
-              minLength: { value: 6, message: "Мінімум 6 символів" },
-            })}
-          />
-        </label>
+        <div className={styles.formPasswordContainer}>
+          <label className={styles.label}>
+            Пароль:
+            <input
+              className={styles.input}
+              type="password"
+              placeholder="Пароль"
+              {...register("password", {
+                required: "Введіть пароль",
+                minLength: { value: 6, message: "Мінімум 6 символів" },
+              })}
+            />
+          </label>
+        </div>
         {errors.password && (
           <p className={styles.fieldError}>{errors.password.message}</p>
         )}
 
         {auth.error && <p className={styles.error}>{auth.error}</p>}
 
-        <div className={styles.actions}>
+        <div className={styles.buttons}>
           <button
             type="submit"
-            className={styles.btnPrimary}
+            className={`${styles.buttonPrimary} ${styles.button}`}
             disabled={auth.isLoading}
           >
             {auth.isLoading ? "..." : "Увійти"}
@@ -89,7 +100,7 @@ export const AuthForm = () => {
 
           <button
             type="button"
-            className={styles.btnSecondary}
+            className={`${styles.buttonSecondary} ${styles.button}`}
             disabled={auth.isLoading}
             onClick={handleSubmit(onRegister)}
           >

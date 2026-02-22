@@ -1,0 +1,73 @@
+@use "../utils/variables";
+
+.section {
+  padding: 40px 29px 53px;
+  max-width: 300px;
+  box-shadow: variables.getColor("menu-shadow");
+  border-radius: 30px;
+  margin: 0 auto;
+}
+
+.formText {
+  color: variables.getColor("text-secondary");
+}
+
+.loginText {
+  margin-bottom: 20px;
+}
+
+.googleTextContainer {
+  max-width: 222px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.formEmailContainer {
+  margin-bottom: 30px;
+}
+
+.formPasswordContainer {
+  margin-bottom: 40px;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input {
+  padding: 20px 17px;
+  border-radius: 30px;
+  font-size: 14px;
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.button {
+  border-radius: 16px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.buttonPrimary {
+  box-shadow: variables.getColor("buttonAccent-shadow");
+  background-color: variables.getColor("accent-color");
+  color: variables.getColor("white-primary");
+  padding: 12px 34px;
+}
+
+.buttonSecondary {
+  box-shadow: variables.getColor("buttonRegister-shadow");
+  color: variables.getColor("text-secondary");
+  padding: 12px 15px;
+}
