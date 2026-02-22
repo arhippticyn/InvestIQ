@@ -1,3 +1,9 @@
+@use "../utils/variables";
+
+* {
+  box-sizing: border-box;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -7,7 +13,8 @@ body {
   font-size: 12px;
   font-weight: 400;
   line-height: calc(14 / 12);
-  color: getColor("black");
+  color: variables.getColor("black");
+  letter-spacing: 0.04em;
 }
 
 a,
@@ -31,6 +38,7 @@ img {
 input {
   outline: none;
   border: none;
+  width: 100%;
 }
 
 a {

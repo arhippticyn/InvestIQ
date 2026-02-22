@@ -3,12 +3,15 @@
 $colors: (
   "text-primary": #111,
   "dark-purple": #1e1823,
-  "axent-orange": #ff751d,
+  "accent-color": #ff751d,
   "white-primary": #fff,
-  "redsecondary": #eb5757,
-  "gray-secondary": #52555f,
+  "error": #eb5757,
+  "text-secondary": #52555f,
   "white-secondary": #f5f6fb,
   "green-secondary": #407946,
+  "menu-shadow": 5px 10px 20px 0 rgba(170, 178, 197, 0.4),
+  "buttonAccent-shadow": 1px 3px 5px 0 rgba(255, 107, 8, 0.35),
+  "buttonRegister-shadow": 1px 3px 5px 0 rgba(82, 85, 95, 0.15),
 );
 
 @function getColor($key) {
