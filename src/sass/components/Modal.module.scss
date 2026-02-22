@@ -51,7 +51,7 @@
       color 0.7s ease;
 
     &:hover {
-      background: variables.getColor("axent-orange");
+      background: variables.getColor("accent-color ");
       color: variables.getColor("white-primary");
     }
   }
