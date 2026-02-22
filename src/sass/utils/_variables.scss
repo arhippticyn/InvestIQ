@@ -6,9 +6,10 @@ $colors: (
   "axent-orange": #ff751d,
   "white-primary": #fff,
   "redsecondary": #eb5757,
-  "gray-secondary": #52555f,
+  "text-secondary": #52555f,
   "white-secondary": #f5f6fb,
   "green-secondary": #407946,
+  "menu-shadow": 5px 10px 20px 0 rgba(170, 178, 197, 0.4),
 );
 
 @function getColor($key) {

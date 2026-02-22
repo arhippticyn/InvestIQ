@@ -1,0 +1,22 @@
+@use "../utils/variables";
+
+.section {
+  width: 100vw;
+  height: 100vh;
+  padding: 60px 10px;
+}
+
+.title {
+  font-size: 64px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.subtitle {
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-align: center;
+  color: variables.getColor("text-secondary");
+}
