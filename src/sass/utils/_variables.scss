@@ -1,14 +1,14 @@
 @use "sass:map";
 
 $colors: (
-  "black": #111,
+  "text-primary": #111,
   "dark-purple": #1e1823,
-  "orange": #ff751d,
-  "white": #fff,
-  "red": #eb5757,
-  "gray": #52555f,
-  "dark-white": #f5f6fb,
-  "green": #407946,
+  "axent-orange": #ff751d,
+  "white-primary": #fff,
+  "redsecondary": #eb5757,
+  "gray-secondary": #52555f,
+  "white-secondary": #f5f6fb,
+  "green-secondary": #407946,
 );
 
 @function getColor($key) {
