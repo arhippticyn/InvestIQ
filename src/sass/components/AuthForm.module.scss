@@ -6,6 +6,7 @@
   box-shadow: variables.getColor('menu-shadow');
   border-radius: 30px;
   margin: 0 auto;
+  background: variables.getColor('white-primary');
 }
 
 .formText {

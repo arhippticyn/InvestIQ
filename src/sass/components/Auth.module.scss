@@ -1,4 +1,4 @@
-@use "../utils/variables";
+@use '../utils/variables';
 
 .section {
   width: 100vw;
@@ -7,6 +7,15 @@
   display: flex;
   flex-direction: column;
   gap: 50px;
+}
+
+.background {
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  position: absolute;
+  background: variables.getColor('white-secondary');
+  z-index: -1;
 }
 
 .title {
@@ -22,7 +31,7 @@
   letter-spacing: 0.15em;
   text-transform: uppercase;
   text-align: center;
-  color: variables.getColor("text-secondary");
+  color: variables.getColor('text-secondary');
 }
 
 @media (min-width: 768px) {
@@ -33,6 +42,30 @@
   .subtitle {
     font-size: 16px;
     letter-spacing: 0.18em;
+  }
+  .background {
+    height: 50vh;
+    padding: 0;
+    border-radius: 0px 15px 0px 15px;
+  }
+  .background::before {
+    content: '';
+    background: url(/public/icon_many.png) no-repeat center/cover;
+    position: absolute;
+    width: 100vw;
+    min-height: 250px;
+    top: 10%;
+    filter: grayscale(100%) brightness(0.6);
+  }
+  .background:after {
+    content: '';
+    background: url(/public/icon.png) no-repeat center/cover;
+    position: absolute;
+    min-width: 255px;
+    min-height: 200px;
+    filter: grayscale(100%) brightness(0.8);
+    top: 100%;
+    left: 5%;
   }
 }
 
@@ -47,5 +80,29 @@
 
   .titleContainer {
     flex: 0 1 385px;
+  }
+  .background {
+    height: 80vh;
+    left: 0%;
+    border-radius: 0px 15px 0px 15px;
+  }
+  .background::before {
+    content: '';
+    background: url(/public/icon_many.png) no-repeat center/cover;
+    position: absolute;
+    min-width: 100vw;
+    min-height: 359px;
+    top: 10%;
+    filter: grayscale(100%) brightness(0.6);
+  }
+  .background:after {
+    content: '';
+    background: url(/public/icon.png) no-repeat center/cover;
+    position: absolute;
+    min-width: 255px;
+    min-height: 200px;
+    filter: grayscale(100%) brightness(0.8);
+    top: 100%;
+    left: 5%;
   }
 }
