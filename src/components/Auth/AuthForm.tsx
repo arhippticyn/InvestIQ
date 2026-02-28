@@ -6,7 +6,8 @@ import {
   useTypificatedDispatch,
 } from "../../hooks/hooks";
 
-import { login, registerUser } from "../../redux/Auth/AuthSlice";
+import { loginUser, registerUser } from "../../redux/Auth/AuthOperation";
+import AuthGogle from "./AuthGogle";
 
 type FormValues = {
   email: string;
@@ -27,11 +28,11 @@ export const AuthForm = () => {
   });
 
   const onLogin = (data: FormValues) => {
-    dispatch(login(data.email, data.password));
+    dispatch(loginUser({email:data.email, password:data.password}));
   };
 
   const onRegister = (data: FormValues) => {
-    dispatch(registerUser(data.email, data.password));
+    dispatch(registerUser({email:data.email, password:data.password}));
   };
 
   return (
@@ -42,7 +43,7 @@ export const AuthForm = () => {
         </p>
       </div>
 
-      {/* місце під гугл */}
+      <AuthGogle title="Google" redirect_google={() => window.location.href = 'http://127.0.0.1:8000/auth/google'} />
 
       <p className={`${styles.formText} ${styles.loginText}`}>
         Або увійти за допомогою ел. пошти та паролю після реєстрації
