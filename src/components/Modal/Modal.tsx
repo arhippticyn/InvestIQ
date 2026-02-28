@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import styles from '../../sass/components/Modal.module.scss'
 
 interface ModalProps {
@@ -7,7 +7,7 @@ interface ModalProps {
   onClickFalse: () => void
 }
 
-const Modal: React.FC<ModalProps> = ({ title, onClickTrue, onClickFalse }) => {
+const Modal = ({ title, onClickTrue, onClickFalse }: ModalProps) => {
   return (
     <div className={styles.Modal}>
       <div className={styles.ModalClose}>
