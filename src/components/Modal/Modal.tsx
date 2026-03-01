@@ -1,10 +1,9 @@
-// import React from 'react'
-import styles from '../../sass/components/Modal.module.scss'
+import styles from "../../sass/components/Modal/Modal.module.scss";
 
 interface ModalProps {
-  title: string
-  onClickTrue: () => void
-  onClickFalse: () => void
+  title: string;
+  onClickTrue: () => void;
+  onClickFalse: () => void;
 }
 
 const Modal = ({ title, onClickTrue, onClickFalse }: ModalProps) => {
@@ -40,9 +39,7 @@ const Modal = ({ title, onClickTrue, onClickFalse }: ModalProps) => {
         </li>
       </ul>
     </div>
-  )
-}
+  );
+};
 
-export default Modal
-
-
+export default Modal;

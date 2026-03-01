@@ -1,4 +1,4 @@
-import styles from "../../sass/components/Auth.module.scss";
+import styles from "../../sass/components/Auth/Auth.module.scss";
 import { AuthForm } from "./AuthForm";
 
 export const Auth = () => {
