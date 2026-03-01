@@ -1,16 +1,19 @@
 // import React from 'react';
 import { FcGoogle } from "react-icons/fc";
-import styles from "../../sass/components/AuthForm.module.scss";
+import styles from "../../sass/components/Auth/AuthForm.module.scss";
 
 interface AuthGogleProps {
-  title: string,
-  redirect_google: () => void
+  title: string;
+  redirect_google: () => void;
 }
 
 const AuthGogle = ({ title, redirect_google }: AuthGogleProps) => {
   return (
     <div className={styles.BtnGoogleContainer}>
-      <button className={styles.BtnGoogle} onClick={redirect_google}><FcGoogle className={styles.BtnGoogleImg} />{title}</button>
+      <button className={styles.BtnGoogle} onClick={redirect_google}>
+        <FcGoogle className={styles.BtnGoogleImg} />
+        {title}
+      </button>
     </div>
   );
 };

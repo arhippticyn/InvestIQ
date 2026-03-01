@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import styles from "../../sass/components/AuthForm.module.scss";
+import styles from "../../sass/components/Auth/AuthForm.module.scss";
 
 import {
   useTypificatedSelector,
@@ -29,11 +29,11 @@ export const AuthForm = () => {
   });
 
   const onLogin = (data: FormValues) => {
-    dispatch(loginUser({email:data.email, password:data.password}));
+    dispatch(loginUser({ email: data.email, password: data.password }));
   };
 
   const onRegister = (data: FormValues) => {
-    dispatch(registerUser({email:data.email, password:data.password}));
+    dispatch(registerUser({ email: data.email, password: data.password }));
   };
 
   return (
@@ -44,7 +44,12 @@ export const AuthForm = () => {
         </p>
       </div>
 
-      <AuthGogle title="Google" redirect_google={() => window.location.href = `${BACKEND_URL}/auth/google`} />
+      <AuthGogle
+        title="Google"
+        redirect_google={() =>
+          (window.location.href = `${BACKEND_URL}/auth/google`)
+        }
+      />
 
       <p className={`${styles.formText} ${styles.loginText}`}>
         Або увійти за допомогою ел. пошти та паролю після реєстрації
