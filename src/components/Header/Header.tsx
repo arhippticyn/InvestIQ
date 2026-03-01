@@ -1,4 +1,4 @@
-import styles from "../../sass/components/Header.module.scss";
+import styles from "../../sass/components/Header/Header.module.scss";
 import { Logo } from "./Logo";
 import { Link } from "react-router-dom";
 import { GetUser } from "../../redux/Auth/AuthOperation";

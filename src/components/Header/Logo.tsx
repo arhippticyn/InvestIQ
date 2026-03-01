@@ -1,4 +1,4 @@
-import styles from "../../sass/components/Logo.module.scss";
+import styles from "../../sass/components/Header/Logo.module.scss";
 
 export const Logo = () => {
   return (
