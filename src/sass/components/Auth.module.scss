@@ -50,7 +50,7 @@
   }
   .background::before {
     content: '';
-    background: url(/public/icon_many.png) no-repeat center/cover;
+    background: url(/public/icon.svg) no-repeat center/cover;
     position: absolute;
     width: 100vw;
     min-height: 250px;
@@ -60,7 +60,7 @@
   }
   .background:after {
     content: '';
-    background: url(/public/icon.png) no-repeat center/cover;
+    background: url(/public/icon_many.svg) no-repeat center/cover;
     position: absolute;
     min-width: 255px;
     min-height: 200px;
@@ -90,7 +90,7 @@
   }
   .background::before {
     content: '';
-    background: url(/public/icon_many.png) no-repeat center/cover;
+    background: url(/public/icon_many.svg) no-repeat center/cover;
     position: absolute;
     min-width: 100vw;
     min-height: 359px;
@@ -99,7 +99,7 @@
   }
   .background:after {
     content: '';
-    background: url(/public/icon.png) no-repeat center/cover;
+    background: url(/public/icon.svg) no-repeat center/cover;
     position: absolute;
     min-width: 255px;
     min-height: 200px;
