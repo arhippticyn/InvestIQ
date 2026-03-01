@@ -32,6 +32,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: variables.getColor("white-secondary");
+    border-radius: 50%;
+    @media (min-width: 1024px) {
+      font-size: 14px;
+      width: 38px;
+      height: 38px;
+    }
   }
   &FullUsername {
     display: none;
@@ -39,11 +46,15 @@
     @media (min-width: 768px) {
       display: flex;
     }
+    @media (min-width: 1024px) {
+      font-size: 14px;
+    }
   }
   &Logout {
     display: flex;
     align-items: center;
     font-weight: 700;
+    background: none;
 
     @media (min-width: 768px) {
       font-weight: 400;
@@ -52,17 +63,20 @@
     }
     &Mobile {
       color: variables.getColor("logout-color");
-      font-size: 16px;
-      display: flex;
-      align-items: center;
+      width: 16px;
+      height: 16px;
       @media (min-width: 768px) {
         display: none;
       }
     }
     &Desktop {
       display: none;
+
       @media (min-width: 768px) {
         display: flex;
+      }
+      @media (min-width: 1024px) {
+        font-size: 14px;
       }
     }
   }

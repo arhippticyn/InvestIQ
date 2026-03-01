@@ -1,12 +1,12 @@
 import styles from "../../sass/components/Header.module.scss";
 import { Logo } from "./Logo";
-import { CiLogout } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { GetUser } from "../../redux/Auth/AuthOperation";
 import { useTypificatedDispatch } from "../../hooks/hooks";
 import { useTypificatedSelector } from "../../hooks/hooks";
 import { useEffect } from "react";
 import { logoutUser } from "../../redux/Auth/AuthSlice";
+import logoutIcon from "../../assets/header/logout.svg";
 
 export const Header = () => {
   const dispatch = useTypificatedDispatch();
@@ -38,7 +38,7 @@ export const Header = () => {
             onClick={() => dispatch(logoutUser())}
           >
             <div className={styles.navLogoutMobile}>
-              <CiLogout></CiLogout>
+              <img src={logoutIcon} alt="logout" />
             </div>
             <div className={styles.navLogoutDesktop}>Вийти</div>
           </button>

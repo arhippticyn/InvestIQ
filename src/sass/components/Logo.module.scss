@@ -26,3 +26,20 @@
   display: flex;
   align-items: center;
 }
+
+@media (min-width: 1024px) {
+  .logoText {
+    font-size: 20px;
+    padding-left: 26px;
+
+    &::before {
+      width: 48px;
+      height: 38px;
+    }
+  }
+
+  .imgContainer {
+    width: 120px;
+    height: 38px;
+  }
+}
