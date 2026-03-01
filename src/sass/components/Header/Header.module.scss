@@ -1,0 +1,83 @@
+@use "../../utils/variables";
+
+.header {
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+
+  @media (min-width: 768px) {
+    padding: 12px 25px;
+  }
+}
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  &UserContainer {
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: variables.getColor("text-secondary");
+    @media (min-width: 768px) {
+      gap: 10px;
+      border-right: 1px solid variables.getColor("border-color");
+      padding-right: 20px;
+    }
+  }
+
+  &ShortUsername {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: variables.getColor("white-secondary");
+    border-radius: 50%;
+    @media (min-width: 1024px) {
+      font-size: 14px;
+      width: 38px;
+      height: 38px;
+    }
+  }
+  &FullUsername {
+    display: none;
+    font-weight: 400;
+    @media (min-width: 768px) {
+      display: flex;
+    }
+    @media (min-width: 1024px) {
+      font-size: 14px;
+    }
+  }
+  &Logout {
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    background: none;
+
+    @media (min-width: 768px) {
+      font-weight: 400;
+      text-decoration: underline;
+      color: variables.getColor("text-secondary");
+    }
+    &Mobile {
+      color: variables.getColor("logout-color");
+      width: 16px;
+      height: 16px;
+      @media (min-width: 768px) {
+        display: none;
+      }
+    }
+    &Desktop {
+      display: none;
+
+      @media (min-width: 768px) {
+        display: flex;
+      }
+      @media (min-width: 1024px) {
+        font-size: 14px;
+      }
+    }
+  }
+}
