@@ -8,6 +8,7 @@ import {
 
 import { loginUser, registerUser } from "../../redux/Auth/AuthOperation";
 import AuthGogle from "./AuthGogle";
+import { BACKEND_URL } from "../../api/api";
 
 type FormValues = {
   email: string;
@@ -43,7 +44,7 @@ export const AuthForm = () => {
         </p>
       </div>
 
-      <AuthGogle title="Google" redirect_google={() => window.location.href = 'http://127.0.0.1:8000/auth/google'} />
+      <AuthGogle title="Google" redirect_google={() => window.location.href = `${BACKEND_URL}/auth/google`} />
 
       <p className={`${styles.formText} ${styles.loginText}`}>
         Або увійти за допомогою ел. пошти та паролю після реєстрації
