@@ -55,7 +55,8 @@
     width: 100vw;
     min-height: 250px;
     top: 10%;
-    filter: grayscale(100%) brightness(0.6);
+    filter: grayscale(100%) brightness(0.9);
+    opacity: 0.56;
   }
   .background:after {
     content: "";
@@ -65,6 +66,7 @@
     min-height: 200px;
     filter: grayscale(100%) brightness(0.8);
     top: 100%;
+    opacity: 0.56;
     left: 5%;
   }
 }
