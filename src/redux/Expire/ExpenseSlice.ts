@@ -29,7 +29,7 @@ const ExpenseInitialState: ExpenseState = {
 const ExpenseSlice = createSlice({
   name: 'expense',
   initialState: ExpenseInitialState,
-
+  reducers: {},
   extraReducers: builder => {
     builder
       .addCase(AddExpense.pending, state => {
