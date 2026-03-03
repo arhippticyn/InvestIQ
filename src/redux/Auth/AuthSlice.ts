@@ -1,6 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
-import { loginUser, registerUser, GetUser } from "./AuthOperation";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { loginUser, registerUser, getUser, getNewRefresh } from "./AuthOperation";
 
 type User = { id: number; email: string; username: string };
 
@@ -22,7 +21,7 @@ const initialState: AuthState = {
 
 const authSlice = createSlice({
   name: "auth",
-  initialState: initialState,
+  initialState,
   reducers: {
     logoutUser(state) {
       state.user = null;
@@ -31,45 +30,44 @@ const authSlice = createSlice({
       state.error = null;
     },
   },
-
   extraReducers: (builder) => {
     builder
-      .addCase(registerUser.pending, (state) => {
-        state.isLoading = true;
+      .addCase(registerUser.fulfilled, (state, action: PayloadAction<{ user: User; token: string }>) => {
+        state.isLoading = false;
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+        state.isLogin = true;
       })
-      .addCase(registerUser.fulfilled, (state, action: PayloadAction<User>) => {
+      .addCase(loginUser.fulfilled, (state, action: PayloadAction<{ user: User; token: string }>) => {
+        state.isLoading = false;
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+        state.isLogin = true;
+      })
+      .addCase(getUser.fulfilled, (state, action: PayloadAction<User>) => {
         state.isLoading = false;
         state.user = action.payload;
         state.isLogin = true;
       })
-      .addCase(registerUser.rejected, (state, action) => {
+      .addCase(getNewRefresh.fulfilled, (state) => {
         state.isLoading = false;
-        state.error = (action.payload as string) || "Error";
-      })
-      .addCase(loginUser.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(loginUser.fulfilled, (state, action: PayloadAction<User>) => {
-        state.isLoading = false;
-        state.user = action.payload;
-        state.isLogin = true;
-      })
-      .addCase(loginUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = (action.payload as string) || "Error";
-      })
-      .addCase(GetUser.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(GetUser.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.user = action.payload;
-        state.isLogin = true;
-      })
-      .addCase(GetUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = (action.payload as string) || "Error";
       });
+
+    builder
+      .addMatcher(
+        (action) => action.type.endsWith("/pending"),
+        (state) => {
+          state.isLoading = true;
+          state.error = null;
+        }
+      )
+      .addMatcher(
+        (action) => action.type.endsWith("/rejected"),
+        (state, action) => {
+          state.isLoading = false;
+          state.error = (action as PayloadAction<string | undefined>).payload || "Error";
+        }
+      );
   },
 });
 

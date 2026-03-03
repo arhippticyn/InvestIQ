@@ -32,11 +32,24 @@ export const loginUser = createAsyncThunk(
   }
 )
 
-export const GetUser = createAsyncThunk(
-  'auth/GetUser',
+export const getUser = createAsyncThunk(
+  'auth/getUser',
   async (_, { rejectWithValue }) => {
     try {
       const response = await api.get('/profile/me')
+
+      return response.data
+    } catch (e: any) {
+      return rejectWithValue(e.message)
+    }
+  }
+)
+
+export const getNewRefresh = createAsyncThunk(
+  'auth/getNewRefresh',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await api.get('/auth/refresh')
 
       return response.data
     } catch (e: any) {

@@ -30,16 +30,22 @@ export const AuthForm = () => {
     mode: "onSubmit",
   });
 
-  const onLogin = (data: FormValues) => {
-    dispatch(loginUser({ email: data.email, password: data.password }));
-
-    navigate('/home', { replace: true })
+  const onLogin = async (data: FormValues) => {
+    try {
+      await dispatch(loginUser({ email: data.email, password: data.password })).unwrap();
+      navigate('/home', { replace: true });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const onRegister = (data: FormValues) => {
-    dispatch(registerUser({ email: data.email, password: data.password }));
-
-    navigate('/home', { replace: true })
+  const onRegister = async (data: FormValues) => {
+    try {
+      await dispatch(registerUser({ email: data.email, password: data.password })).unwrap();
+      navigate('/home', { replace: true });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
