@@ -1,4 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
+import { isAnyOf } from '@reduxjs/toolkit'
 import {
   AddExpense,
   ClearAllExpense,
@@ -26,103 +27,81 @@ const ExpenseInitialState: ExpenseState = {
   currentExpense: null
 }
 
+
 const ExpenseSlice = createSlice({
   name: 'expense',
   initialState: ExpenseInitialState,
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(AddExpense.pending, state => {
-        state.isRefreshing = true
+      .addCase(AddExpense.fulfilled, (state, action: PayloadAction<Expense>) => {
+        state.expenses.push(action.payload)
       })
-      .addCase(
-        AddExpense.fulfilled,
-        (state, action: PayloadAction<Expense>) => {
-          state.isRefreshing = false
-          state.expenses.push(action.payload)
-        }
-      )
-      .addCase(AddExpense.rejected, (state, action) => {
-        state.isRefreshing = false
-        state.error = action.payload as string
-      })
-      .addCase(GetAllExpenses.pending, state => {
-        state.isRefreshing = true
-      })
-      .addCase(
-        GetAllExpenses.fulfilled,
-        (state, action: PayloadAction<Expense[]>) => {
-          state.isRefreshing = false
-          state.expenses = action.payload
-        }
-      )
-      .addCase(GetAllExpenses.rejected, (state, action) => {
-        state.isRefreshing = false
-        state.error = action.payload as string
-      })
-      .addCase(GetExpenseById.pending, state => {
-        state.isRefreshing = true
-      })
-      .addCase(GetExpenseById.fulfilled, (state, action) => {
-        state.isRefreshing = false
-        state.currentExpense = action.payload
-      })
-      .addCase(GetExpenseById.rejected, (state, action) => {
-        state.isRefreshing = false
-        state.error = action.payload as string
-      })
-      .addCase(DeleteExpense.pending, state => {
-        state.isRefreshing = true
-      })
-      .addCase(DeleteExpense.fulfilled, (state, action) => {
-        state.isRefreshing = false
-        state.expenses = state.expenses.filter(
-          expense => expense.id !== action.payload
-        )
-      })
-      .addCase(DeleteExpense.rejected, (state, action) => {
-        state.isRefreshing = false
-        state.error = action.payload as string
-      })
-      .addCase(GetExpensesByCategory.pending, state => {
-        state.isRefreshing = true
-      })
-      .addCase(GetExpensesByCategory.fulfilled, (state, action) => {
-        state.isRefreshing = false
+      .addCase(GetAllExpenses.fulfilled, (state, action: PayloadAction<Expense[]>) => {
         state.expenses = action.payload
       })
-      .addCase(GetExpensesByCategory.rejected, (state, action) => {
-        state.isRefreshing = false
-        state.error = action.payload as string
+      .addCase(GetExpenseById.fulfilled, (state, action) => {
+        state.currentExpense = action.payload
       })
-      .addCase(ClearAllExpense.pending, state => {
-        state.isRefreshing = true
+      .addCase(DeleteExpense.fulfilled, (state, action) => {
+        state.expenses = state.expenses.filter(expense => expense.id !== action.payload)
+      })
+      .addCase(GetExpensesByCategory.fulfilled, (state, action) => {
+        state.expenses = action.payload
       })
       .addCase(ClearAllExpense.fulfilled, state => {
-        state.isRefreshing = false
         state.expenses = []
       })
-      .addCase(ClearAllExpense.rejected, (state, action) => {
-        state.isRefreshing = false
-        state.error = action.payload as string
-      })
-      .addCase(SetAmountExpense.pending, state => {
-        state.isRefreshing = true
-      })
       .addCase(SetAmountExpense.fulfilled, (state, action) => {
-        state.isRefreshing = false
-        const expense = state.expenses.find(
-          expense => expense.id === action.payload.id
-        )
+        const expense = state.expenses.find(expense => expense.id === action.payload.id)
         if (expense) {
           expense.amount = action.payload.amount
         }
       })
-      .addCase(SetAmountExpense.rejected, (state, action) => {
-        state.isRefreshing = false
-        state.error = action.payload as string
-      })
+      .addMatcher(
+        isAnyOf(
+          AddExpense.pending,
+          GetAllExpenses.pending,
+          GetExpenseById.pending,
+          DeleteExpense.pending,
+          GetExpensesByCategory.pending,
+          ClearAllExpense.pending,
+          SetAmountExpense.pending,
+        ),
+        state => {
+          state.isRefreshing = true
+          state.error = null
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          AddExpense.rejected,
+          GetAllExpenses.rejected,
+          GetExpenseById.rejected,
+          DeleteExpense.rejected,
+          GetExpensesByCategory.rejected,
+          ClearAllExpense.rejected,
+          SetAmountExpense.rejected,
+        ),
+        (state, action) => {
+          state.isRefreshing = false
+          state.error = action.payload as string
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          AddExpense.fulfilled,
+          GetAllExpenses.fulfilled,
+          GetExpenseById.fulfilled,
+          DeleteExpense.fulfilled,
+          GetExpensesByCategory.fulfilled,
+          ClearAllExpense.fulfilled,
+          SetAmountExpense.fulfilled,
+        ),
+        state => {
+          state.isRefreshing = false
+        }
+      )
   },
 })
-
 export const ExpenseReducer = ExpenseSlice.reducer
