@@ -1,16 +1,19 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { api } from '../../api/api'
 
-type Expense = {
+export type Expense = {
+  id: number
   description: string
   amount: number
-  date: Date
+  date: string   
   category_id: number
+  is_active: boolean
 }
+export type ExpenseCreate = Omit<Expense, 'id' | 'is_active'>
 
-export const AddExpense = createAsyncThunk(
+export const AddExpense = createAsyncThunk<Expense, ExpenseCreate>(
   'expense/AddExpire',
-  async (expense: Expense, { rejectWithValue }) => {
+  async (expense: ExpenseCreate, { rejectWithValue }) => {
     try {
       const response = await api.post('/expense', expense)
 
@@ -21,7 +24,7 @@ export const AddExpense = createAsyncThunk(
   }
 )
 
-export const GetAllExpenses = createAsyncThunk(
+export const GetAllExpenses = createAsyncThunk<Expense[]>(
   'expense/GetAllExpenses',
   async (_, { rejectWithValue }) => {
     try {
@@ -38,7 +41,7 @@ export const GetExpenseById = createAsyncThunk(
   'expense/GetExpenseById',
   async (id: number, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/ex$pense/${id}`)
+      const response = await api.get(`/expense/${id}`)
 
       return response.data
     } catch (e) {
@@ -47,7 +50,7 @@ export const GetExpenseById = createAsyncThunk(
   }
 )
 
-export const SetAmountExpense = createAsyncThunk(
+export const SetAmountExpense = createAsyncThunk<Expense, { id: number; new_amount: number }>(
   'expense/SetAmountExpense',
   async (
     { id, new_amount }: { id: number; new_amount: number },
@@ -65,7 +68,7 @@ export const SetAmountExpense = createAsyncThunk(
   }
 )
 
-export const DeleteExpense = createAsyncThunk(
+export const DeleteExpense = createAsyncThunk<number, number>(
   'expense/DeleteExpense',
   async (id: number, { rejectWithValue }) => {
     try {
@@ -78,8 +81,8 @@ export const DeleteExpense = createAsyncThunk(
   }
 )
 
-export const CleatAllExpense = createAsyncThunk(
-  'expense/CleatAllExpense',
+export const ClearAllExpense = createAsyncThunk<void, void>(
+  'expense/ClearAllExpense',
   async (_, { rejectWithValue }) => {
     try {
       const response = await api.delete('/expense/clear')
@@ -91,7 +94,7 @@ export const CleatAllExpense = createAsyncThunk(
   }
 )
 
-export const GetExpensesByCategory = createAsyncThunk(
+export const GetExpensesByCategory = createAsyncThunk<Expense[],Expense>(
   'expense/GetExpensesByCategory',
   async (_, { rejectWithValue }) => {
     try {
