@@ -1,4 +1,4 @@
-import type { RootState } from '../../redux/store'
+import type { RootState } from '../store'
 
 export const selectExpenses = (state: RootState) => state.expense.expenses
 export const selectCurrentExpense = (state: RootState) => state.expense.currentExpense
