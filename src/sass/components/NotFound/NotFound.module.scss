@@ -3,7 +3,6 @@
 .notFound {
     background-color: #f9f9f9;
     position: relative;
-    z-index: -2;
     width: 100vw;
     height: 100vh;
 }
@@ -42,6 +41,7 @@
 
     @media (min-width: 1024px) {
         position: absolute;
+        margin: 0;
 
         bottom: 19%;
         left: 23%;
