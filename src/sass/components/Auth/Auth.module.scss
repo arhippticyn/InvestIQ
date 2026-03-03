@@ -9,6 +9,15 @@
   gap: 50px;
 }
 
+.background {
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  position: absolute;
+  background: variables.getColor("white-secondary");
+  z-index: -1;
+}
+
 .title {
   font-size: 64px;
   font-weight: 900;
@@ -34,6 +43,32 @@
     font-size: 16px;
     letter-spacing: 0.18em;
   }
+  .background {
+    height: 50vh;
+    padding: 0;
+    border-radius: 0px 15px 0px 15px;
+  }
+  .background::before {
+    content: '';
+    background: url(/public/icon_many.svg) no-repeat center/cover;
+    position: absolute;
+    width: 100vw;
+    min-height: 250px;
+    top: 10%;
+    filter: grayscale(100%) brightness(0.9);
+    opacity: 0.56;
+  }
+  .background:after {
+    content: '';
+    background: url(/public/icon.svg) no-repeat center/cover;
+    position: absolute;
+    min-width: 255px;
+    min-height: 200px;
+    filter: grayscale(100%) brightness(0.8);
+    top: 100%;
+    opacity: 0.56;
+    left: 5%;
+  }
 }
 
 @media (min-width: 1280px) {
@@ -47,5 +82,31 @@
 
   .titleContainer {
     flex: 0 1 385px;
+  }
+  .background {
+    height: 80vh;
+    left: 0%;
+    border-radius: 0px 15px 0px 15px;
+  }
+  .background::before {
+    content: '';
+    background: url(/public/icon_many.svg) no-repeat center/cover;
+    position: absolute;
+    min-width: 100vw;
+    min-height: 359px;
+    top: 10%;
+    opacity: 0.4;
+    filter: grayscale(100%) brightness(0.6);
+  }
+  .background:after {
+    content: '';
+    background: url(/public/icon.svg) no-repeat center/cover;
+    position: absolute;
+    min-width: 240px;
+    min-height: 180px;
+    filter: grayscale(100%) brightness(0.8);
+    top: 80%;
+    left: 7%;
+    opacity: 0.4;
   }
 }
