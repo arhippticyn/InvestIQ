@@ -1,0 +1,76 @@
+@use '../../utils/variables';
+
+.notFound {
+    background-color: #f9f9f9;
+    position: relative;
+    z-index: -2;
+    width: 100vw;
+    height: 100vh;
+}
+
+.thumb {
+    display: none;
+
+    @media (min-width: 1024px) {
+        display: block;
+
+        width: 70%;
+        height: 100vh;
+
+        margin: 0 auto;
+    }
+}
+
+.img {
+    object-position: center;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.button {
+    border-radius: 16px;
+    text-transform: uppercase;
+    font-weight: 700;
+
+    box-shadow: variables.getColor("buttonAccent-shadow");
+    background-color: variables.getColor("accent-color");
+    color: variables.getColor("white-primary");
+    padding: 12px 34px;
+
+    margin: 15px auto;
+
+    @media (min-width: 1024px) {
+        position: absolute;
+
+        bottom: 19%;
+        left: 23%;
+    }
+}
+
+.textBlock {
+    background-color: transparent;
+    padding: 50px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+
+    @media (min-width: 1024px) {
+        display: none;
+    }
+}
+
+.text {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 20px;
+    margin: 10px 0 0 10px;
+
+    &:first-of-type {
+        font-size: 70px;
+        letter-spacing: 7px;
+        font-weight: 900;
+    }
+}
