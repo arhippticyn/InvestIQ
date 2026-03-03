@@ -1,5 +1,11 @@
-import { Header } from "../components/Header/Header";
+import Expense from '../components/Expense/Expense'
+import { Header } from '../components/Header/Header'
 
 export const Home = () => {
-  return <Header></Header>;
-};
+  return (
+    <div>
+      <Header></Header>
+      <Expense></Expense>
+    </div>
+)
+}

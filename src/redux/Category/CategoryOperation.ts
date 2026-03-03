@@ -1,12 +1,15 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { api } from "../../api/api";
+import { createAsyncThunk } from '@reduxjs/toolkit'
+import { api } from '../../api/api'
 
-export const GetAllCategory = createAsyncThunk('category/GetAllCategory', (async (_, {rejectWithValue}) => {
+export const GetAllCategory = createAsyncThunk(
+  'category/GetAllCategory',
+  async (_, { rejectWithValue }) => {
     try {
-        const response = await api.get('/category')
-
-        return response.data
-    } catch(e) {
-        return rejectWithValue('Отримання категорій неуспішна')
+      const response = await api.get('/category')
+      console.log('categories response:', response.data)
+      return response.data
+    } catch (e) {
+      return rejectWithValue('Отримання категорій неуспішна')
     }
-}))
+  }
+)
