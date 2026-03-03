@@ -9,6 +9,7 @@ import {
 import { loginUser, registerUser } from "../../redux/Auth/AuthOperation";
 import AuthGogle from "./AuthGogle";
 import { BACKEND_URL } from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 type FormValues = {
   email: string;
@@ -18,6 +19,7 @@ type FormValues = {
 export const AuthForm = () => {
   const dispatch = useTypificatedDispatch();
   const auth = useTypificatedSelector((state) => state.auth);
+  const navigate = useNavigate()
 
   const {
     register,
@@ -30,10 +32,14 @@ export const AuthForm = () => {
 
   const onLogin = (data: FormValues) => {
     dispatch(loginUser({ email: data.email, password: data.password }));
+
+    navigate('/home', { replace: true })
   };
 
   const onRegister = (data: FormValues) => {
     dispatch(registerUser({ email: data.email, password: data.password }));
+
+    navigate('/home', { replace: true })
   };
 
   return (
