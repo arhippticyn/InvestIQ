@@ -7,7 +7,7 @@ import NotFound from "./components/NotFound/NotFound";
 
 function App() {
   return (
-    <div>
+    <>
       {/* <Modal title="Ви впевнені?" onClickTrue={() => {}} onClickFalse={() => {}} />
       <Modal title="Ви дійсно хочете вийти?" onClickTrue={() => {}} onClickFalse={() => {}} /> */}
       <Routes>
@@ -15,7 +15,7 @@ function App() {
         <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="*" element={<NotFound></NotFound>} />
       </Routes>
-    </div>
+    </>
   );
 }
 
