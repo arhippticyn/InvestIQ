@@ -1,11 +1,10 @@
 import styles from "../../sass/components/Header/Header.module.scss";
 import { Logo } from "./Logo";
 import { Link } from "react-router-dom";
-import { getUser } from "../../redux/Auth/AuthOperation";
+import { getUser, logoutUser } from "../../redux/Auth/AuthOperation";
 import { useTypificatedDispatch } from "../../hooks/hooks";
 import { useTypificatedSelector } from "../../hooks/hooks";
 import { useEffect } from "react";
-import { logoutUser } from "../../redux/Auth/AuthSlice";
 import logoutIcon from "../../assets/header/logout.svg";
 import { useNavigate } from "react-router-dom";
 

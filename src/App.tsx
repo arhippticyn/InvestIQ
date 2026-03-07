@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import { Home } from "./pages/Home";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectesRoute";
 import NotFound from "./components/NotFound/NotFound";
+import Profile from "./components/Profile/Profile";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Auth />} />
         <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+        <Route path="/home/me" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="*" element={<NotFound></NotFound>} />
       </Routes>
     </>
