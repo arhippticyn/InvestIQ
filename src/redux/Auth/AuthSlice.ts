@@ -1,11 +1,10 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import { loginUser, registerUser, getUser, getNewRefresh } from "./AuthOperation";
-
-type User = { id: number; email: string; username: string };
+import { loginUser, registerUser, logoutUser, getUser, getNewRefresh, setNewUsername } from "./AuthOperation";
+import type { IUser } from "../../types/user";
 
 type AuthState = {
   token: string;
-  user: User | null;
+  user: IUser | null;
   isLoading: boolean;
   isLogin: boolean;
   error: string | null;
@@ -22,34 +21,37 @@ const initialState: AuthState = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {
-    logoutUser(state) {
-      state.user = null;
-      state.token = "";
-      state.isLogin = false;
-      state.error = null;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(registerUser.fulfilled, (state, action: PayloadAction<{ user: User; token: string }>) => {
+      .addCase(registerUser.fulfilled, (state, action: PayloadAction<{ user: IUser; token: string }>) => {
         state.isLoading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isLogin = true;
       })
-      .addCase(loginUser.fulfilled, (state, action: PayloadAction<{ user: User; token: string }>) => {
+      .addCase(loginUser.fulfilled, (state, action: PayloadAction<{ user: IUser; token: string }>) => {
         state.isLoading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isLogin = true;
       })
-      .addCase(getUser.fulfilled, (state, action: PayloadAction<User>) => {
+      .addCase(getUser.fulfilled, (state, action: PayloadAction<IUser>) => {
         state.isLoading = false;
         state.user = action.payload;
         state.isLogin = true;
       })
       .addCase(getNewRefresh.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(setNewUsername.fulfilled, (state, action: PayloadAction<IUser>) => {
+        state.user = action.payload;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.user = null;
+        state.token = "";
+        state.isLogin = false;
+        state.error = null;
         state.isLoading = false;
       });
 
@@ -71,5 +73,4 @@ const authSlice = createSlice({
   },
 });
 
-export const { logoutUser } = authSlice.actions;
 export default authSlice.reducer;

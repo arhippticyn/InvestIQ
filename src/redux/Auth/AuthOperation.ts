@@ -32,6 +32,19 @@ export const loginUser = createAsyncThunk(
   }
 )
 
+export const logoutUser = createAsyncThunk(
+  'auth/logoutUser',
+  async (_,{ rejectWithValue }) => {
+    try {
+      const response = await api.delete('/auth/logout')
+
+      return response.data
+    } catch (e) {
+      return rejectWithValue('Успішний вихід')
+    }
+  }
+)
+
 export const getUser = createAsyncThunk(
   'auth/getUser',
   async (_, { rejectWithValue }) => {
@@ -50,6 +63,20 @@ export const getNewRefresh = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await api.get('/auth/refresh')
+
+      return response.data
+    } catch (e: any) {
+      return rejectWithValue(e.message)
+    }
+  }
+)
+
+
+export const setNewUsername = createAsyncThunk(
+  'auth/setNewUsername',
+  async (new_username: string, { rejectWithValue }) => {
+    try {
+      const response = await api.patch('/profile/setusername', new_username)
 
       return response.data
     } catch (e: any) {
