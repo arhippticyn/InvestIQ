@@ -281,3 +281,30 @@
     column-gap: 78px;
   }
 }
+
+@media (min-width:1024px) {
+    .expenseForm {
+        align-items: center;
+    }
+    .expenseContent {
+        margin-top: 5px;
+    }
+    .btns {
+        position: static;
+        align-items: center;
+        margin-top: -5px;
+    }
+
+    .title {
+        column-gap: 290px;
+        
+    }
+
+    .info {
+        column-gap: 325px;
+    }
+
+    .amount_info {
+        column-gap: 530px;
+    }
+}
