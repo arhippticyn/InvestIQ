@@ -14,7 +14,7 @@ import {
 type ExpenseState = {
   expenses: Expense[]
   isRefreshing: boolean
-  expenseId: number | null
+  expenseId: number,
   error: string | null,
   currentExpense: Expense | null
 }
@@ -22,7 +22,7 @@ type ExpenseState = {
 const ExpenseInitialState: ExpenseState = {
   expenses: [],
   isRefreshing: false,
-  expenseId: null,
+  expenseId: 0,
   error: null,
   currentExpense: null
 }
@@ -31,7 +31,11 @@ const ExpenseInitialState: ExpenseState = {
 const ExpenseSlice = createSlice({
   name: 'expense',
   initialState: ExpenseInitialState,
-  reducers: {},
+  reducers: {
+    SelectIdExpense(state, action) {
+      state.expenseId = action.payload
+    }
+  },
   extraReducers: builder => {
     builder
       .addCase(AddExpense.fulfilled, (state, action: PayloadAction<Expense>) => {
@@ -104,4 +108,7 @@ const ExpenseSlice = createSlice({
       )
   },
 })
+
+export const { SelectIdExpense } = ExpenseSlice.actions
+
 export const ExpenseReducer = ExpenseSlice.reducer
