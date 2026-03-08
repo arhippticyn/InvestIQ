@@ -15,7 +15,7 @@ export const AddExpense = createAsyncThunk<Expense, ExpenseCreate>(
   'expense/AddExpire',
   async (expense: ExpenseCreate, { rejectWithValue }) => {
     try {
-      const response = await api.post('/expense', expense)
+      const response = await api.post('/finances/expense', expense)
 
       return response.data
     } catch (e) {
@@ -28,7 +28,7 @@ export const GetAllExpenses = createAsyncThunk<Expense[]>(
   'expense/GetAllExpenses',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get('/expense')
+      const response = await api.get('/finances/expense')
 
       return response.data
     } catch (e) {
@@ -41,7 +41,7 @@ export const GetExpenseById = createAsyncThunk(
   'expense/GetExpenseById',
   async (id: number, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/expense/${id}`)
+      const response = await api.get(`/finances/expense/${id}`)
 
       return response.data
     } catch (e) {
@@ -57,7 +57,7 @@ export const SetAmountExpense = createAsyncThunk<Expense, { id: number; new_amou
     { rejectWithValue }
   ) => {
     try {
-      const response = await api.patch(`/expense/${id}`, {
+      const response = await api.patch(`/finances/expense/${id}`, {
         amount: new_amount,
       })
 
@@ -72,7 +72,7 @@ export const DeleteExpense = createAsyncThunk<number, number>(
   'expense/DeleteExpense',
   async (id: number, { rejectWithValue }) => {
     try {
-      const response = await api.delete(`/expense/${id}`)
+      const response = await api.delete(`/finances/expense/${id}`)
 
       return response.data
     } catch (e) {
@@ -85,7 +85,7 @@ export const ClearAllExpense = createAsyncThunk<void, void>(
   'expense/ClearAllExpense',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.delete('/expense/clear')
+      const response = await api.delete('/finances/expense/clear')
 
       return response.data
     } catch (e) {
@@ -94,11 +94,11 @@ export const ClearAllExpense = createAsyncThunk<void, void>(
   }
 )
 
-export const GetExpensesByCategory = createAsyncThunk<Expense[],Expense>(
+export const GetExpensesByCategory = createAsyncThunk<Expense[], number>(
   'expense/GetExpensesByCategory',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get('/category/expense')
+      const response = await api.get('/finances/category/expense')
 
       return response.data
     } catch (e) {

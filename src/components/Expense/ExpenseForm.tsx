@@ -23,17 +23,26 @@ const ExpenseForm = ({}: ExpenseFormProps) => {
   const dispatch = useTypificatedDispatch()
   const categories = useTypificatedSelector(selectCategories)
 
-  useEffect(() => {
-    dispatch(GetAllCategory())
-  }, [dispatch])
 
-  const { register, handleSubmit } = useForm<FormValues>({
+
+  const { register, handleSubmit, setValue } = useForm<FormValues>({
     defaultValues: { description: '', amount: 0, date: '', category_id: 0 },
     mode: 'onSubmit',
   })
 
+    useEffect(() => {
+    dispatch(GetAllCategory())
+  }, [dispatch])
+
+
+  useEffect(() => {
+    if (categories.length > 0) {
+      setValue('category_id', categories[0].id)
+    }
+  },[categories, setValue])
+
   const OnSubmit = (data: FormValues) => {
-    dispatch(AddExpense(data))
+    dispatch(AddExpense({...data, date:new Date().toISOString()}))
   }
 
   return (
@@ -46,7 +55,7 @@ const ExpenseForm = ({}: ExpenseFormProps) => {
       />
       <select
         className={styles.categoriesSelect}
-        {...register('category_id')}
+        {...register('category_id', { valueAsNumber: true })}
         onChange={e => dispatch(SelectId(Number(e.target.value)))}>
         {categories.map(category => {
           return (
@@ -61,7 +70,7 @@ const ExpenseForm = ({}: ExpenseFormProps) => {
         })}
       </select>
       <input
-        {...register('amount')}
+        {...register('amount', { valueAsNumber: true })}
         type="number"
         placeholder="0,00"
         className={styles.input_amount}
