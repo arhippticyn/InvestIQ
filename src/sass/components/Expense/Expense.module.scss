@@ -1,0 +1,119 @@
+@use '../../utils/variables';
+
+.expense {
+  padding: 12px 10px;
+
+  &Form {
+    padding: 0px 10px;
+  }
+}
+
+.background {
+    width: 110vw;
+    height: 50vh;
+    position: absolute;
+    background: variables.getColor(white-secondary);
+    z-index: -1000;
+    left: 0%;
+    top:10%;
+    border-radius: 0px 0px 0px 40px;
+}
+
+.input_descr {
+  min-width: 125px;
+  border-radius: 20px 20px 0px 0px;
+  border: 2px solid variables.getColor(white-primary);
+  min-height: 40px;
+  background: variables.getColor(white-secondary);
+  padding: 7px;
+
+  &::placeholder {
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+}
+
+.categoriesSelect {
+  min-width: 245px;
+  border-radius: 0px 0px 20px 20px;
+  border: 2px solid variables.getColor(white-primary);
+  min-height: 40px;
+  background: variables.getColor(white-secondary);
+  padding: 7px;
+
+  &::placeholder {
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+}
+
+.input_amount_wrapper {
+  width: 130px;
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  margin: 0 auto;
+  border: 2px solid variables.getColor(white-primary);
+  background: variables.getColor(white-secondary);
+  border-radius: 20px;
+
+  & hr {
+    height: 34px;
+    color: variables.getColor(white-primary);
+  }
+
+  & svg {
+    width: 22px;
+    height: 20px;
+  }
+}
+
+.input_amount {
+  background: variables.getColor(white-secondary);
+  width: 80px;
+  padding: 6px;
+
+  &:placeholder {
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+}
+
+.btns {
+  display: flex;
+  column-gap: 8px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.expense_btn {
+  min-width: 120px;
+  height: 44px;
+  box-shadow: 1px 3px 5px 0 rgba(255, 107, 8, 0.35);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-align: center;
+  color: variables.getColor(white-primary);
+  border-radius: 16px;
+  background: variables.getColor(accent-color);
+}
+
+.clear_btn {
+  min-width: 120px;
+  height: 44px;
+  box-shadow: 1px 2px 5px 0 rgba(170, 178, 197, 0.4);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-align: center;
+  color: variables.getColor(text-secondary);
+  border-radius: 16px;
+  background: variables.getColor(white-secondary);
+}

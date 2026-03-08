@@ -3,16 +3,12 @@ import {
   useTypificatedDispatch,
   useTypificatedSelector,
 } from '../../hooks/hooks'
-import {
-  selectExpenseId,
-  selectExpenses,
-} from '../../redux/Expense/ExpireSelectors'
+import { selectExpenses } from '../../redux/Expense/ExpireSelectors'
 import {
   DeleteExpense,
   GetAllExpenses,
 } from '../../redux/Expense/ExpenseOperation'
 import { selectCategories } from '../../redux/Category/CategorySelectors'
-import { SelectIdExpense } from '../../redux/Expense/ExpenseSlice'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 
 interface ExpenseListProps {}
@@ -21,7 +17,6 @@ const ExpenseList = ({}: ExpenseListProps) => {
   const dispatch = useTypificatedDispatch()
   const expenses = useTypificatedSelector(selectExpenses)
   const categories = useTypificatedSelector(selectCategories)
-  const expenseId = useTypificatedSelector(selectExpenseId)
 
   useEffect(() => {
     dispatch(GetAllExpenses())
@@ -32,17 +27,16 @@ const ExpenseList = ({}: ExpenseListProps) => {
   }
   return (
     <div>
-      <table>
-        <tr>
-          <th>дата</th>
-          <th>опис</th>
-          <th>категорія</th>
-          <th>сума</th>
-          <th></th>
-        </tr>
-        
-        {expenses.map(expense => {
-          return (
+      {expenses.map(expense => {
+        return (
+          <table>
+            <tr>
+              <th>дата</th>
+              <th>опис</th>
+              <th>категорія</th>
+              <th>сума</th>
+              <th></th>
+            </tr>
             <tr key={expense.id}>
               <td>{expense.date}</td>
               <td>{expense.description}</td>
@@ -60,9 +54,9 @@ const ExpenseList = ({}: ExpenseListProps) => {
                 </button>
               </td>
             </tr>
-          )
-        })}
-      </table>
+          </table>
+        )
+      })}
     </div>
   )
 }
