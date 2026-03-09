@@ -8,6 +8,36 @@
   }
 }
 
+.switchBtns {
+  display: flex;
+  position: fixed;
+  bottom: 0%;
+  left: 0%;
+  width: 100%;
+  z-index: 10;
+}
+
+.BtnSwitch {
+  display: flex;
+  width: 47%;
+  height: 50px;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-align: center;
+  background: #fefefe;
+  color: variables.getColor(text-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.BtnSwitch.active {
+  background: variables.getColor(accent-color);
+  color: variables.getColor(white-primary);
+}
+
 .background {
   width: 110vw;
   height: 50vh;
@@ -247,14 +277,13 @@
 
   .expenseHeadRows {
     display: flex;
-    column-gap: calc(100% - 80%);
+    column-gap: calc(100% - 80.4%);
 
     & th {
       font-weight: 700;
-      font-size: 12px;
+      font-size: 15px;
       letter-spacing: 0.02em;
       text-transform: uppercase;
-
     }
   }
 
@@ -264,15 +293,20 @@
     justify-content: baseline;
   }
 
+  .category {
+    font-size: 14px;
+  }
+
   .title {
     column-gap: 70px;
     flex-direction: row-reverse;
   }
   .info {
     display: flex;
-    column-gap: 110px;
+    column-gap: 100px;
   }
   .descr {
+    font-size: 16px;
     color: variables.getColor(text-secondary);
   }
 
@@ -280,31 +314,54 @@
     display: flex;
     column-gap: 78px;
   }
+
+
+  .switchBtns {
+    position: absolute;
+    top: 10%;
+    left: 4%;
+  }
+  
+  .BtnSwitch {
+    width: 140px;
+    height: 40px;
+    border-radius: 20px 20px 0px 0px;
+    
+  }
+
+  .BtnSwitch.active {
+    color: variables.getColor(accent-color);
+    background: #fefefe;
+  }
 }
 
-@media (min-width:1024px) {
-    .expenseForm {
-        align-items: center;
-    }
-    .expenseContent {
-        margin-top: 5px;
-    }
-    .btns {
-        position: static;
-        align-items: center;
-        margin-top: -5px;
-    }
+@media (min-width: 1024px) {
+  .expenseForm {
+    align-items: center;
+  }
+  .expenseContent {
+    margin-top: 5px;
+  }
+  .btns {
+    position: static;
+    align-items: center;
+    margin-top: -5px;
+  }
 
-    .title {
-        column-gap: 290px;
-        
-    }
+  .title {
+    column-gap: 290px;
+  }
 
-    .info {
-        column-gap: 325px;
-    }
+  .info {
+    column-gap: 325px;
+  }
 
-    .amount_info {
-        column-gap: 530px;
-    }
+  .amount_info {
+    column-gap: 510px;
+  }
+
+  .switchBtns {
+    top: 5.5%;
+    left: 1%;
+  }
 }
