@@ -3,27 +3,31 @@ import {
   useTypificatedDispatch,
   useTypificatedSelector,
 } from '../../hooks/hooks'
-import { selectExpenses } from '../../redux/Expense/ExpireSelectors'
+import { selectFinances } from '../../redux/Finance/FinanceSelectors'
 import styles from '../../sass/components/Expense/Expense.module.scss'
 import {
-  DeleteExpense,
-  GetAllExpenses,
-} from '../../redux/Expense/ExpenseOperation'
+  DeleteFinance,
+  GetAllFinances,
+} from '../../redux/Finance/FinanceOperation'
 import { selectCategories } from '../../redux/Category/CategorySelectors'
 import { AiFillDelete } from 'react-icons/ai'
 import { format } from 'date-fns';
 
-const ExpenseList = () => {
+interface FinanceListProps {
+  type: 'incomes' | 'expense'
+}
+
+const FinanceList = ({ type }: FinanceListProps) => {
   const dispatch = useTypificatedDispatch()
-  const expenses = useTypificatedSelector(selectExpenses)
+  const finances = useTypificatedSelector(selectFinances)
   const categories = useTypificatedSelector(selectCategories)
 
   useEffect(() => {
-    dispatch(GetAllExpenses())
-  }, [dispatch])
+    dispatch(GetAllFinances(type))
+  }, [dispatch, type])
 
   const handleDelete = (id: number) => {
-    dispatch(DeleteExpense(id))
+    dispatch(DeleteFinance({ id: id, type: type }))
   }
 
   return (
@@ -40,29 +44,29 @@ const ExpenseList = () => {
         </thead>
 
         <tbody>
-          {expenses.map(expense => {
+          {finances.map(finance => {
             const category = categories.find(
-              category => category.id === expense.category_id
+              category => category.id === finance.category_id
             )
 
             return (
-              <tr key={expense.id} className={styles.expenseContent}>
-                <td className={styles.descr}>{expense.description}</td>
+              <tr key={finance.id} className={styles.expenseContent}>
+                <td className={styles.descr}>{finance.description}</td>
 
-                <td className={styles.date}>{format(new Date(expense.date), 'dd.MM.yyyy')}</td>
+                <td className={styles.date}>{format(new Date(finance.date), 'dd.MM.yyyy')}</td>
 
                 <td className={styles.category}>
                   {category?.name}
                 </td>
 
-                <td className={styles.amountTxt}>
-                  -{expense.amount} грн
+                <td className={`${styles.amountTxt} ${type === 'expense' ? styles.expenseText : styles.incomesText}`}>
+                  {type === 'expense' ? '-' : ""}{finance.amount} грн
                 </td>
 
                 <td>
                   <button
                     className={styles.btnDelete}
-                    onClick={() => handleDelete(expense.id)}
+                    onClick={() => handleDelete(finance.id)}
                   >
                     <AiFillDelete />
                   </button>
@@ -76,4 +80,4 @@ const ExpenseList = () => {
   )
 }
 
-export default ExpenseList
+export default FinanceList

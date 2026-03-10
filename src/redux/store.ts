@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authReducer from './Auth/AuthSlice'
-import { ExpenseReducer } from './Expense/ExpenseSlice'
+import { FinanceReducer } from './Finance/FinanceSlice'
 import { CategoryReducer } from './Category/CategorySlice'
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    expense: ExpenseReducer,
+    finance: FinanceReducer, 
     category: CategoryReducer
   },
 })

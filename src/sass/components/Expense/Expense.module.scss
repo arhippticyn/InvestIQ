@@ -349,13 +349,20 @@
   grid-area: amount;
   font-weight: 700;
   font-size: 14px;
-  color: #e7192e;
   text-align: right;
   white-space: nowrap;
 
   @media (min-width: 768px) {
     text-align: left;
   }
+}
+
+.expenseText {
+  color: #e7192e;
+}
+
+.incomesText {
+  color: #407946;
 }
 
 .deleteTd {

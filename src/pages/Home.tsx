@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Expense from '../components/Expense/Expense'
+import Finance from '../components/Finance/Finance'
 import styles from '../sass/components/Expense/Expense.module.scss'
 import { Header } from '../components/Header/Header'
 
@@ -26,7 +26,7 @@ export const Home = () => {
           </button>
         </div>
 
-        {activePage ? <Expense></Expense> : null}
+        <Finance type={activePage ? 'expense' : 'incomes'} />
 
       </div>
     </>

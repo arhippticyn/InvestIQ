@@ -9,12 +9,14 @@ import { GetAllCategory } from '../../redux/Category/CategoryOperation'
 import { SelectId } from '../../redux/Category/CategorySlice'
 import { useForm } from 'react-hook-form'
 import {
-  AddExpense,
-  ClearAllExpense,
-} from '../../redux/Expense/ExpenseOperation'
+  AddFinance,
+  ClearAllFinances,
+} from '../../redux/Finance/FinanceOperation'
 import { FaCalculator } from 'react-icons/fa6'
 
-interface ExpenseFormProps { }
+interface FinanceFormProps {
+  type: 'incomes' | 'expense'
+}
 
 type FormValues = {
   description: string
@@ -23,7 +25,7 @@ type FormValues = {
   category_id: number
 }
 
-const ExpenseForm = ({ }: ExpenseFormProps) => {
+const FinanceForm = ({ type }: FinanceFormProps) => {
   const dispatch = useTypificatedDispatch()
   const categories = useTypificatedSelector(selectCategories)
 
@@ -43,7 +45,13 @@ const ExpenseForm = ({ }: ExpenseFormProps) => {
   }, [categories, setValue])
 
   const OnSubmit = (data: FormValues) => {
-    dispatch(AddExpense({ ...data, date: new Date().toISOString() }))
+    dispatch(AddFinance({
+      finance: {
+        ...data,
+        date: new Date().toISOString()
+      },
+      type: type
+    }));
   }
 
   return (
@@ -91,7 +99,7 @@ const ExpenseForm = ({ }: ExpenseFormProps) => {
           Ввести
         </button>
         <button
-          onClick={() => dispatch(ClearAllExpense())}
+          onClick={() => dispatch(ClearAllFinances(type))}
           className={styles.clear_btn}
         >
           Очистити
@@ -101,4 +109,4 @@ const ExpenseForm = ({ }: ExpenseFormProps) => {
   )
 }
 
-export default ExpenseForm
+export default FinanceForm
