@@ -4,7 +4,7 @@ import ExpenseList from './ExpenseList'
 
 interface ExpenseProps {}
 
-const Expense = ({}:ExpenseProps) => {
+const Expense = ({}: ExpenseProps) => {
   return (
     <div className={styles.expense}>
         <ExpenseForm />

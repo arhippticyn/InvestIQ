@@ -6,24 +6,29 @@ import { Header } from '../components/Header/Header'
 export const Home = () => {
   const [activePage, setActivePages] = useState(true)
   return (
-    <div>
+    <>
       <Header></Header>
-      {activePage ? <Expense></Expense> : null}
 
-      <div className={styles.switchBtns}>
-        <button
-          className={`${styles.BtnSwitch} ${activePage && styles.active}`}
-          onClick={() => setActivePages(true)}
-        >
-          Витрати
-        </button>
-        <button
-          className={`${styles.BtnSwitch} ${!activePage && styles.active}`}
-          onClick={() => setActivePages(false)}
-        >
-          Доходи
-        </button>
+      <div className={styles.container}>
+
+        <div className={styles.switchBtns}>
+          <button
+            className={`${styles.BtnSwitch} ${activePage && styles.active}`}
+            onClick={() => setActivePages(true)}
+          >
+            Витрати
+          </button>
+          <button
+            className={`${styles.BtnSwitch} ${!activePage && styles.active}`}
+            onClick={() => setActivePages(false)}
+          >
+            Доходи
+          </button>
+        </div>
+
+        {activePage ? <Expense></Expense> : null}
+
       </div>
-    </div>
+    </>
   )
 }

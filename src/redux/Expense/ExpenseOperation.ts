@@ -9,6 +9,7 @@ export type Expense = {
   category_id: number
   is_active: boolean
 }
+
 export type ExpenseCreate = Omit<Expense, 'id' | 'is_active'>
 
 export const AddExpense = createAsyncThunk<Expense, ExpenseCreate>(

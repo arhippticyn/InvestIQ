@@ -5,8 +5,16 @@ import { Home } from "./pages/Home";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectesRoute";
 import NotFound from "./components/NotFound/NotFound";
 import Profile from "./components/Profile/Profile";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function App() {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    navigate('/home')
+  }, [])
+
   return (
     <>
       {/* <Modal title="Ви впевнені?" onClickTrue={() => {}} onClickFalse={() => {}} />
