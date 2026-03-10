@@ -10,7 +10,6 @@ export const Home = () => {
       <Header></Header>
 
       <div className={styles.container}>
-
         <div className={styles.switchBtns}>
           <button
             className={`${styles.BtnSwitch} ${activePage && styles.active}`}

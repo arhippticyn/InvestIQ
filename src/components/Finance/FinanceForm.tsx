@@ -1,18 +1,16 @@
-import { useEffect } from 'react'
-import {
-  useTypificatedDispatch,
-  useTypificatedSelector,
-} from '../../hooks/hooks'
+import { useEffect, useState, forwardRef } from 'react'
+import { useTypificatedDispatch, useTypificatedSelector } from '../../hooks/hooks'
 import { selectCategories } from '../../redux/Category/CategorySelectors'
 import styles from '../../sass/components/Expense/Expense.module.scss'
 import { GetAllCategory } from '../../redux/Category/CategoryOperation'
 import { SelectId } from '../../redux/Category/CategorySlice'
 import { useForm } from 'react-hook-form'
-import {
-  AddFinance,
-  ClearAllFinances,
-} from '../../redux/Finance/FinanceOperation'
+import { AddFinance, ClearAllFinances } from '../../redux/Finance/FinanceOperation'
 import { FaCalculator } from 'react-icons/fa6'
+import { MdCalendarMonth } from 'react-icons/md' // Красива іконка календаря
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
+import { uk } from 'date-fns/locale'
 
 interface FinanceFormProps {
   type: 'incomes' | 'expense'
@@ -25,9 +23,17 @@ type FormValues = {
   category_id: number
 }
 
+const CustomDateInput = forwardRef(({ value, onClick }: any, ref: any) => (
+  <div className={styles.datePickerWrapper} onClick={onClick} ref={ref}>
+    <MdCalendarMonth className={styles.calendarIcon} />
+    <span className={styles.dateValue}>{value}</span>
+  </div>
+));
+
 const FinanceForm = ({ type }: FinanceFormProps) => {
   const dispatch = useTypificatedDispatch()
   const categories = useTypificatedSelector(selectCategories)
+  const [startDate, setStartDate] = useState<Date | null>(new Date())
 
   const { register, handleSubmit, setValue } = useForm<FormValues>({
     defaultValues: { description: '', amount: 0, date: '', category_id: 0 },
@@ -45,10 +51,12 @@ const FinanceForm = ({ type }: FinanceFormProps) => {
   }, [categories, setValue])
 
   const OnSubmit = (data: FormValues) => {
+    const finalDate = startDate ? startDate.toISOString() : new Date().toISOString();
+
     dispatch(AddFinance({
       finance: {
         ...data,
-        date: new Date().toISOString()
+        date: finalDate
       },
       type: type
     }));
@@ -59,6 +67,15 @@ const FinanceForm = ({ type }: FinanceFormProps) => {
       <div className={styles.background}></div>
       <div className={styles.formContainer}>
         <div className={styles.formWrapper}>
+
+          <DatePicker
+            selected={startDate}
+            onChange={(date: Date | null) => setStartDate(date)}
+            locale={uk}
+            dateFormat="dd.MM.yyyy"
+            customInput={<CustomDateInput />}
+          />
+
           <input
             {...register('description')}
             type="text"
@@ -70,19 +87,14 @@ const FinanceForm = ({ type }: FinanceFormProps) => {
             {...register('category_id', { valueAsNumber: true })}
             onChange={e => dispatch(SelectId(Number(e.target.value)))}
           >
-            {categories.map(category => {
-              return (
-                <option
-                  key={category.id}
-                  className={styles.categoriesOption}
-                  value={category.id}
-                >
-                  {category.name}
-                </option>
-              )
-            })}
+            {categories.map(category => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
           </select>
         </div>
+
         <div className={styles.input_amount_wrapper}>
           <input
             {...register('amount', { valueAsNumber: true })}
@@ -99,6 +111,7 @@ const FinanceForm = ({ type }: FinanceFormProps) => {
           Ввести
         </button>
         <button
+          type="button"
           onClick={() => dispatch(ClearAllFinances(type))}
           className={styles.clear_btn}
         >
