@@ -14,7 +14,7 @@ import {
 } from '../../redux/Expense/ExpenseOperation'
 import { FaCalculator } from 'react-icons/fa6'
 
-interface ExpenseFormProps {}
+interface ExpenseFormProps { }
 
 type FormValues = {
   description: string
@@ -23,7 +23,7 @@ type FormValues = {
   category_id: number
 }
 
-const ExpenseForm = ({}: ExpenseFormProps) => {
+const ExpenseForm = ({ }: ExpenseFormProps) => {
   const dispatch = useTypificatedDispatch()
   const categories = useTypificatedSelector(selectCategories)
 
@@ -49,38 +49,41 @@ const ExpenseForm = ({}: ExpenseFormProps) => {
   return (
     <form className={styles.expenseForm} onSubmit={handleSubmit(OnSubmit)}>
       <div className={styles.background}></div>
-      <input
-        {...register('description')}
-        type="text"
-        placeholder="Опис товару"
-        className={styles.input_descr}
-      />
-      <select
-        className={styles.categoriesSelect}
-        {...register('category_id', { valueAsNumber: true })}
-        onChange={e => dispatch(SelectId(Number(e.target.value)))}
-      >
-        {categories.map(category => {
-          return (
-            <option
-              key={category.id}
-              className={styles.categoriesOption}
-              value={category.id}
-            >
-              {category.name}
-            </option>
-          )
-        })}
-      </select>
-      <div className={styles.input_amount_wrapper}>
-        <input
-          {...register('amount', { valueAsNumber: true })}
-          type="number"
-          placeholder="0,00"
-          className={styles.input_amount}
-        />
-        <hr />
-        <FaCalculator className={styles.input_icon} />
+      <div className={styles.formContainer}>
+        <div className={styles.formWrapper}>
+          <input
+            {...register('description')}
+            type="text"
+            placeholder="Опис товару"
+            className={styles.input_descr}
+          />
+          <select
+            className={styles.categoriesSelect}
+            {...register('category_id', { valueAsNumber: true })}
+            onChange={e => dispatch(SelectId(Number(e.target.value)))}
+          >
+            {categories.map(category => {
+              return (
+                <option
+                  key={category.id}
+                  className={styles.categoriesOption}
+                  value={category.id}
+                >
+                  {category.name}
+                </option>
+              )
+            })}
+          </select>
+        </div>
+        <div className={styles.input_amount_wrapper}>
+          <input
+            {...register('amount', { valueAsNumber: true })}
+            type="number"
+            placeholder="0,00"
+            className={styles.input_amount}
+          />
+          <FaCalculator className={styles.input_icon} />
+        </div>
       </div>
 
       <div className={styles.btns}>
