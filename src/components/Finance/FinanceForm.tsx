@@ -6,8 +6,10 @@ import { GetAllCategory } from '../../redux/Category/CategoryOperation'
 import { SelectId } from '../../redux/Category/CategorySlice'
 import { useForm } from 'react-hook-form'
 import { AddFinance, ClearAllFinances } from '../../redux/Finance/FinanceOperation'
+import { updateBudget } from '../../redux/Budget/BudgetOperations'
+import { selectBudget } from '../../redux/Budget/BudgetSelectors'
 import { FaCalculator } from 'react-icons/fa6'
-import { MdCalendarMonth } from 'react-icons/md' // Красива іконка календаря
+import { MdCalendarMonth } from 'react-icons/md'
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import { uk } from 'date-fns/locale'
@@ -32,6 +34,7 @@ const CustomDateInput = forwardRef(({ value, onClick }: any, ref: any) => (
 
 const FinanceForm = ({ type }: FinanceFormProps) => {
   const dispatch = useTypificatedDispatch()
+  const budget = useTypificatedSelector(selectBudget)
   const categories = useTypificatedSelector(selectCategories)
   const [startDate, setStartDate] = useState<Date | null>(new Date())
 
@@ -60,6 +63,12 @@ const FinanceForm = ({ type }: FinanceFormProps) => {
       },
       type: type
     }));
+
+    if (type === 'expense') {
+      dispatch(updateBudget(budget - data.amount))
+    } else {
+      dispatch(updateBudget(budget + data.amount))
+    }
   }
 
   return (
@@ -97,9 +106,16 @@ const FinanceForm = ({ type }: FinanceFormProps) => {
 
         <div className={styles.input_amount_wrapper}>
           <input
-            {...register('amount', { valueAsNumber: true })}
-            type="number"
-            placeholder="0,00"
+            {...register('amount', {
+              setValueAs: (v: string) => {
+                if (!v) return 0
+                const num = parseFloat(v.replace(',', '.'))
+                return num
+              },
+              validate: (value) => value > 0 || "Сума повинна бути більше нуля"
+            })}
+            type="text"
+            placeholder="0.00"
             className={styles.input_amount}
           />
           <FaCalculator className={styles.input_icon} />

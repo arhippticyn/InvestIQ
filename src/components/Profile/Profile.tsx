@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useTypificatedDispatch, useTypificatedSelector } from "../../hooks/hooks"
 import { getUser, setNewUsername, logoutUser } from "../../redux/Auth/AuthOperation"
-import { selectUser } from "../../redux/selectors"
+import { selectUser } from "../../redux/Auth/AuthSelectors"
 import { FiEdit } from "react-icons/fi"
 import logoutIcon from "../../assets/header/logout.svg"
 import { useForm, type FieldErrors } from "react-hook-form"
@@ -27,7 +27,7 @@ export default function Profile() {
 
     useEffect(() => {
         reset({ username: user?.username })
-    }, [user, reset]) 
+    }, [user, reset])
 
     const onSave = async function (data: FormValues) {
         try {
