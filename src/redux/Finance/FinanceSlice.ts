@@ -9,6 +9,9 @@ import {
   GetFinanceByCategory,
   SetAmountFinance,
   type Finance,
+  SetAmountIncome,
+  GetResultFinance,
+  type ResultResponse,
 } from './FinanceOperation'
 
 type FinanceState = {
@@ -16,7 +19,8 @@ type FinanceState = {
   isRefreshing: boolean
   financeId: number,
   error: string | null,
-  currentFinance: Finance | null
+  currentFinance: Finance | null,
+  result: ResultResponse | null
 }
 
 const FinanceSliceInitialState: FinanceState = {
@@ -24,7 +28,8 @@ const FinanceSliceInitialState: FinanceState = {
   isRefreshing: false,
   financeId: 0,
   error: null,
-  currentFinance: null
+  currentFinance: null,
+  result: null
 }
 
 
@@ -62,6 +67,15 @@ const FinanceSlice = createSlice({
           finance.amount = action.payload.amount
         }
       })
+      .addCase(SetAmountIncome.fulfilled, (state, action) => {
+        const income = state.finances.find(finance => finance.id === action.payload.id)
+        if (income) {
+          income.amount = action.payload.amount
+        }
+      })
+      .addCase(GetResultFinance.fulfilled, (state, action) => {
+        state.result = action.payload
+      })
       .addMatcher(
         isAnyOf(
           AddFinance.pending,
@@ -71,6 +85,8 @@ const FinanceSlice = createSlice({
           GetFinanceByCategory.pending,
           ClearAllFinances.pending,
           SetAmountFinance.pending,
+          SetAmountIncome.pending,
+          GetResultFinance.pending
         ),
         state => {
           state.isRefreshing = true
@@ -86,6 +102,8 @@ const FinanceSlice = createSlice({
           GetFinanceByCategory.rejected,
           ClearAllFinances.rejected,
           SetAmountFinance.rejected,
+          SetAmountIncome.rejected,
+          GetResultFinance.rejected
         ),
         (state, action) => {
           state.isRefreshing = false
@@ -101,6 +119,8 @@ const FinanceSlice = createSlice({
           GetFinanceByCategory.fulfilled,
           ClearAllFinances.fulfilled,
           SetAmountFinance.fulfilled,
+          SetAmountIncome.fulfilled,
+          GetResultFinance.fulfilled
         ),
         state => {
           state.isRefreshing = false

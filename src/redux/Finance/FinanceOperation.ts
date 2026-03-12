@@ -10,6 +10,21 @@ export type Finance = {
   is_active: boolean
 }
 
+type GetResultArgs = {
+  type: 'incomes' | 'expense'
+  year: number
+}
+
+type ResultMonth = {
+  month: string,
+  total: number
+}
+
+export type ResultResponse = {
+  year: number,
+  months: ResultMonth[]
+}
+
 export type FinanceType = 'incomes' | 'expense'
 export type FinanceCreate = Omit<Finance, 'id' | 'is_active'>
 
@@ -96,3 +111,27 @@ export const GetFinanceByCategory = createAsyncThunk<Finance[], { type: FinanceT
     }
   }
 )
+
+export const SetAmountIncome = createAsyncThunk<Finance, {id: number, new_amount: number}>('finance/SetAmountIncome', async ({id, new_amount}, {rejectWithValue}) => {
+  try {
+    const response = await api.put(`/finances/income/amount/${id}`, {
+      amount: new_amount
+    })
+
+    return response.data
+  } catch (e: any) {
+    return rejectWithValue(e.message || 'Ти бомж, іди нафіг')
+  }
+})
+
+export const GetResultFinance = createAsyncThunk<ResultResponse,GetResultArgs>('finance/GetResultFinance', async ({ type, year }, {rejectWithValue}) => {
+  try {
+    const response = await api.get(`/finances/${type}/result`, {
+      params: { year }
+    })
+
+    return response.data
+  } catch (e: any) {
+    return rejectWithValue(e.message || 'Помилка отримання результату')
+  }
+})

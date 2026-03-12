@@ -5,3 +5,4 @@ export const selectCurrentFinancee = (state: RootState) => state.finance.current
 export const selectFinanceId = (state: RootState) => state.finance.financeId
 export const selectIsRefreshing = (state: RootState) => state.finance.isRefreshing
 export const selectError = (state: RootState) => state.finance.error
+export const selectResult = (state: RootState) => state.finance.result?.months ?? []
