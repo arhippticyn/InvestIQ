@@ -44,7 +44,7 @@ const FinanceList = ({ type }: FinanceListProps) => {
         </thead>
 
         <tbody>
-          {finances.map(finance => {
+          {[...finances].reverse().map(finance => {
             const category = categories.find(
               category => category.id === finance.category_id
             )
