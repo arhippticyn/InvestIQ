@@ -1,9 +1,12 @@
-import { selectBudget } from "../../redux/Budget/BudgetSelectors";
-import { getBudget, updateBudget } from "../../redux/Budget/BudgetOperations";
-import { useTypificatedDispatch, useTypificatedSelector } from "../../hooks/hooks";
-import { useEffect, useState } from "react";
-import styles from '../../sass/components/Budget/Budget.module.scss'
 import React from "react";
+import StarterBudgetModal from "../StarterBudgetModal/StarterBudgetModal";
+import { getBudget, updateBudget } from "../../redux/Budget/BudgetOperations";
+import { useTypificatedDispatch } from "../../hooks/hooks";
+import { useEffect } from "react";
+import { toast, ToastContainer } from 'react-toastify';
+import styles from '../../sass/components/Budget/Budget.module.scss'
+import 'react-toastify/dist/ReactToastify.css';
+
 
 interface BudgetProps {
     newBudget: string,
@@ -19,8 +22,24 @@ export default function Budget({ newBudget, setNewBudget, budget }: BudgetProps)
         setNewBudget(String(budget))
     }, [budget])
 
-    const handleBudget = function () {
-        dispatch(updateBudget(Number(newBudget)))
+    const handleBudget = async () => {
+        try {
+            if (Number(newBudget) === 0) {
+                toast.warning("Баланс не можна змінити на 0")
+                return
+            }
+
+            if (Number(newBudget) === budget) {
+                toast.warning("Баланс має змінитися")
+                return
+            }
+
+
+            await dispatch(updateBudget(Number(newBudget)))
+            toast.success("Баланс успішно оновлено!")
+        } catch (err) {
+            toast.error("Щось пішло не так при оновленні балансу")
+        }
     }
 
     return (
@@ -35,8 +54,17 @@ export default function Budget({ newBudget, setNewBudget, budget }: BudgetProps)
                         onChange={(e) => setNewBudget(e.target.value)}
                     />
                     <button className={styles.btn} type="button" onClick={handleBudget}>Підтвердити</button>
+
+                    <StarterBudgetModal></StarterBudgetModal>
+
                 </div>
+
             </div>
+
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+            />
         </>
     )
 
