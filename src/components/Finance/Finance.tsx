@@ -1,4 +1,5 @@
 import styles from '../../sass/components/Expense/Expense.module.scss'
+import Result from '../Result/Result'
 import ExpenseForm from './FinanceForm'
 import ExpenseList from './FinanceList'
 
@@ -11,8 +12,9 @@ const Finance = ({ type }: ExpenseProps) => {
     <div className={styles.expense}>
       <ExpenseForm type={type} />
       <ExpenseList type={type} />
+      <Result type={type} />
     </div>
   )
 }
 
-export default Finance
+export default Finance  

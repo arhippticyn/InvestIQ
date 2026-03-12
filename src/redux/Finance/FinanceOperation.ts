@@ -11,7 +11,7 @@ export type Finance = {
 }
 
 type GetResultArgs = {
-  type: 'income' | 'expense'
+  type: 'incomes' | 'expense'
   year: number
 }
 

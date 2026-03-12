@@ -20,7 +20,7 @@ type FinanceState = {
   financeId: number,
   error: string | null,
   currentFinance: Finance | null,
-  result: ResultResponse | []
+  result: ResultResponse | null
 }
 
 const FinanceSliceInitialState: FinanceState = {
@@ -29,7 +29,7 @@ const FinanceSliceInitialState: FinanceState = {
   financeId: 0,
   error: null,
   currentFinance: null,
-  result: []
+  result: null
 }
 
 
