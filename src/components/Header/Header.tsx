@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import logoutIcon from "../../assets/header/logout.svg";
 import { useNavigate } from "react-router-dom";
 
-export const Header = () => {
+const Header = () => {
   const dispatch = useTypificatedDispatch();
   const user = useTypificatedSelector((state) => state.auth.user);
   const token = useTypificatedSelector((state) => state.auth.token);
@@ -49,3 +49,5 @@ export const Header = () => {
     </header>
   );
 };
+
+export default Header
