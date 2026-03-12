@@ -1,0 +1,325 @@
+@use '../../utils/variables';
+
+.mobileForm {
+    margin-bottom: 20px;
+
+    @media (min-width: 768px) {
+        display: none;
+    }
+}
+
+.mobileContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.openModal {
+    display: block;
+    background-color: transparent;
+    transition: transform 250ms ease-in-out;
+
+    &.opened {
+        transform: rotate(45deg);
+    }
+
+    @media (min-width: 768px) {
+        display: none;
+    }
+}
+
+.expenseForm {
+    @media (min-width: 768px) {
+        display: none;
+    }
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+
+    @media (min-width: 768px) {
+        padding: 58px 52px;
+        flex-direction: column;
+    }
+
+    @media (min-width: 1280px) {
+        padding: 9px 110px;
+    }
+
+}
+
+.formContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.switchBtns {
+    display: flex;
+}
+
+.BtnSwitch {
+    display: flex;
+    width: 50%;
+    height: 50px;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    text-align: center;
+    background-color: #fefefe;
+    color: variables.getColor(text-primary);
+    justify-content: center;
+    align-items: center;
+
+    &.active {
+        background: variables.getColor(accent-color);
+        color: variables.getColor(white-primary);
+    }
+
+    @media (min-width: 768px) {
+        width: 140px;
+        height: 40px;
+        border-radius: 20px 20px 0px 0px;
+
+        &.active {
+            color: variables.getColor(accent-color);
+            background: #fefefe;
+        }
+    }
+}
+
+
+.input_descr {
+    min-width: 125px;
+    border-radius: 20px 20px 0px 0px;
+    border: 2px solid variables.getColor(white-primary);
+    min-height: 40px;
+    background: variables.getColor(white-secondary);
+    padding: 7px;
+
+    &::placeholder {
+        font-weight: 400;
+        font-size: 12px;
+        letter-spacing: 0.02em;
+    }
+
+    @media (min-width: 768px) {
+        border: 2px solid variables.getColor(white-secondary);
+        height: 50px;
+        background: variables.getColor(white-primary);
+        border-radius: 20px 0px 0px 0px;
+        min-width: 170px;
+        max-width: 268px;
+    }
+}
+
+.categoriesSelect {
+    min-width: 245px;
+    width: 100%;
+    border-radius: 0px 0px 20px 20px;
+    border: 2px solid variables.getColor(white-primary);
+    min-height: 40px;
+    background: variables.getColor(white-secondary);
+    padding: 7px;
+
+    &::placeholder {
+        font-weight: 400;
+        font-size: 12px;
+        letter-spacing: 0.02em;
+    }
+
+    @media (min-width: 768px) {
+        border: 2px solid variables.getColor(white-secondary);
+        height: 50px;
+        background: variables.getColor(white-primary);
+        border-radius: 0;
+        min-width: 170px;
+        max-width: 268px;
+    }
+}
+
+.formWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.input_amount_wrapper {
+    max-width: 130px;
+    min-height: 34px;
+    display: flex;
+    align-items: center;
+    border: 1px solid variables.getColor(white-primary);
+    background: variables.getColor(white-secondary);
+    border-radius: 0 0 20px 20px;
+    margin-bottom: 20px;
+    padding: 0 10px;
+
+    & svg {
+        width: 22px;
+        height: 20px;
+    }
+}
+
+.input_amount {
+    background: variables.getColor(white-secondary);
+    width: 80px;
+    padding: 12px 20px;
+
+    &::placeholder {
+        font-weight: 400;
+        font-size: 12px;
+        letter-spacing: 0.02em;
+    }
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+
+    @media (min-width: 768px) {
+        background: variables.getColor(white-primary);
+    }
+}
+
+.btns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 8px;
+}
+
+.expense_btn {
+    min-width: 120px;
+    height: 44px;
+    box-shadow: 1px 3px 5px 0 rgba(255, 107, 8, 0.35);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    text-align: center;
+    color: variables.getColor(white-primary);
+    border-radius: 16px;
+    background: variables.getColor(accent-color);
+}
+
+.clear_btn {
+    min-width: 120px;
+    height: 44px;
+    box-shadow: 1px 2px 5px 0 rgba(170, 178, 197, 0.4);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    text-align: center;
+    color: variables.getColor(text-secondary);
+    border-radius: 16px;
+    background: variables.getColor(white-secondary);
+}
+
+
+.datePickerWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 10px;
+    background: transparent;
+    margin-right: 20px;
+}
+
+.calendarIcon {
+    font-size: 26px;
+    color: #52555f;
+}
+
+.dateValue {
+    font-weight: 900;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #52555f;
+}
+
+:global {
+    .react-datepicker {
+        font-family: inherit;
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0px 10px 60px rgba(170, 178, 197, 0.2);
+        background-color: variables.getColor(white-primary);
+    }
+
+    .react-datepicker__header {
+        background-color: variables.getColor(white-secondary);
+        border-bottom: none;
+        border-radius: 16px 16px 0 0;
+        padding-top: 12px;
+    }
+
+    .react-datepicker__current-month {
+        font-weight: 700;
+        font-size: 14px;
+        color: variables.getColor(text-primary);
+    }
+
+    .react-datepicker__day-name {
+        color: variables.getColor(text-secondary);
+        font-weight: 700;
+    }
+
+    .react-datepicker__day {
+        color: variables.getColor(text-primary);
+        border-radius: 50%;
+        width: 30px;
+        line-height: 30px;
+        margin: 3px;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background-color: variables.getColor(white-secondary);
+            color: variables.getColor(accent-color);
+        }
+    }
+
+    .react-datepicker__day--selected,
+    .react-datepicker__day--keyboard-selected {
+        background-color: variables.getColor(accent-color) !important;
+        color: variables.getColor(white-primary) !important;
+        font-weight: 700;
+    }
+
+    .react-datepicker__day--today {
+        color: variables.getColor(accent-color);
+        font-weight: 900;
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background: variables.getColor(accent-color);
+            border-radius: 50%;
+        }
+    }
+
+    .react-datepicker__triangle {
+        display: none;
+    }
+
+    .react-datepicker__navigation {
+        top: 14px;
+    }
+
+    .react-datepicker__navigation-icon::before {
+        border-color: variables.getColor(text-secondary);
+        border-width: 2px;
+    }
+}

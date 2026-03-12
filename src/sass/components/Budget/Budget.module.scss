@@ -29,6 +29,8 @@
     align-items: center;
     justify-content: center;
 
+    position: relative;
+
     @media (min-width: 768px) {
         gap: 15px;
     }
