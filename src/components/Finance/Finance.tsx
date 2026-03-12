@@ -11,10 +11,12 @@ const Finance = ({ type }: ExpenseProps) => {
   return (
     <div className={styles.expense}>
       <ExpenseForm type={type} />
-      <ExpenseList type={type} />
-      <Result type={type} />
+      <div className={`${styles.financeRes} ${type === 'incomes' && styles.incomes}`}>
+        <ExpenseList type={type} />
+        <Result type={type} />
+      </div>
     </div>
   )
 }
 
-export default Finance  
+export default Finance

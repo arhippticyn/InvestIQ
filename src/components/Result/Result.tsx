@@ -29,7 +29,7 @@ const Result = ({ type }: ResultProps) => {
           return (
             <tr className={styles.resultsTableContainer} key={result.month}>
               <td className={styles.resultsTableContainerMonth}>{result.month}</td>
-              <td className={styles.resultsTableContainerTotal}>{result.total}</td>
+              <td className={styles.resultsTableContainerTotal}>{result.total} грн</td>
             </tr>
           )
         })}
