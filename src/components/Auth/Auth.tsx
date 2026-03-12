@@ -1,7 +1,7 @@
 import styles from "../../sass/components/Auth/Auth.module.scss";
 import { AuthForm } from "./AuthForm";
 
-export const Auth = () => {
+const Auth = () => {
   return (
     <section className={styles.section}>
       <div className={styles.background}></div>
@@ -14,3 +14,5 @@ export const Auth = () => {
     </section>
   );
 };
+
+export default Auth
