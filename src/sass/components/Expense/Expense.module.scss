@@ -230,6 +230,7 @@
   overflow-y: auto;
   border-radius: 12px;
   margin-top: 10px;
+  margin-bottom: 50px;
 
   &::-webkit-scrollbar {
     width: 6px;
@@ -246,6 +247,7 @@
 
   @media (min-width: 768px) {
     margin-top: 50px;
+    margin-bottom: 0;
   }
 
   @media (min-width: 1024px) {
@@ -257,7 +259,6 @@
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  margin-top: 10px;
 
   border-radius: 12px;
   overflow: hidden;
@@ -429,71 +430,70 @@
 
 .resultsTable {
   display: none;
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 270px;
+  background-color: #f5f6fb;
+  border-radius: 20px 20px 20px 0;
+  overflow: hidden;
 
   @media (min-width: 768px) {
-    display: block;
-    min-width: 230px;
-    border-radius: 30px;
-    position: absolute;
-    top: 128%;
+    display: table;
+
+    margin-top: 50px;
   }
 
   @media (min-width: 1024px) {
-    min-width: 250px;
-    position: static;
+    margin-top: 60px;
   }
 }
 
 .resultsTableHead {
-  background: variables.getColor(white-secondary);
-  border-radius: 30px 30px 0px 0px;
-  height: 40px;
-  padding-top: 10px;
-  display: block;
-
-  @media (min-width: 768px) {
-    min-width: 230px;
-    width: 230px;
-  }
-
-  @media (min-width: 1024px) {
-    width: 250px;
-  }
+  width: 100%;
+  border-bottom: 2px solid #fff;
 }
 
 .resultsTableHeadTitle {
   font-weight: 700;
-  font-size: 17px;
+  font-size: 12px;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   text-align: center;
   color: variables.getColor(text-primary);
-  width: 230px;
+  padding: 12px 0;
 }
 
 .resultsTableBody {
-  display: flex;
-  margin-top: 5px;
-  row-gap: 5px;
+  background-color: #f5f6fb;
 }
 
 .resultsTableContainer {
-  min-width: 230px;
-  background: variables.getColor(white-secondary);
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px;
+  height: 38px;
+  border-bottom: 2px solid #ffffff;
 
-  @media (min-width: 1024px) {
-    width: 250px;
+  &:last-child {
+    border-bottom: none;
   }
+
+  td {
+    padding: 0 20px;
+    vertical-align: middle;
+  }
+}
+
+.resultsTableContainerMonth,
+.resultsTableContainerTotal {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: variables.getColor(text-secondary);
 }
 
 .resultsTableContainerMonth {
   font-weight: 400;
-  font-size: 15px;
+  font-size: 12px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: variables.getColor(text-secondary);
@@ -501,9 +501,8 @@
 
 .resultsTableContainerTotal {
   font-weight: 400;
-  font-size: 15px;
+  font-size: 12px;
   letter-spacing: 0.04em;
-  text-transform: uppercase;
   text-align: right;
   color: variables.getColor(text-secondary);
 }
@@ -511,12 +510,8 @@
 .financeRes {
   @media (min-width: 1024px) {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     column-gap: 50px;
-  }
-
-  & > .resultsTable{
-    margin-top: 50px;
   }
 }
 
