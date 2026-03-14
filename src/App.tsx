@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect, Suspense, lazy } from "react";
 import Loader from "./components/Loader/Loader";
+import FinanceChart from "./components/Chart/Chart";
 
 const Auth = lazy(() => import("./components/Auth/Auth"))
 const Home = lazy(() => import("./pages/Home"))
@@ -26,6 +27,7 @@ function App() {
           <Route path="/" element={<Auth />} />
           <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route path="/home/me" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="/home/chart" element={<ProtectedRoute><FinanceChart type={'incomes'} month={'March'} year={2026} /></ProtectedRoute>} />
           <Route path="*" element={<NotFound></NotFound>} />
         </Routes>
       </Suspense>
