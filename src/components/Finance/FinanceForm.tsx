@@ -112,7 +112,7 @@ const FinanceForm = ({ type }: FinanceFormProps) => {
                 const num = parseFloat(v.replace(',', '.'))
                 return num
               },
-              validate: (value) => value >= 0 || "Сума повинна бути більше нуля"
+              validate: (value) => value > 0 || "Сума повинна бути більше нуля"
             })}
             type="text"
             placeholder="0.00"
