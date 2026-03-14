@@ -124,7 +124,7 @@ export const SetAmountIncome = createAsyncThunk<Finance, {id: number, new_amount
   }
 })
 
-export const GetResultFinance = createAsyncThunk<ResultResponse,GetResultArgs>('finance/GetResultFinance', async ({ type, year }, {rejectWithValue}) => {
+export const GetResultFinance = createAsyncThunk<ResultResponse, GetResultArgs>('finance/GetResultFinance', async ({ type, year }, {rejectWithValue}) => {
   try {
     const response = await api.get(`/finances/${type}/result`, {
       params: { year }

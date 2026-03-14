@@ -199,7 +199,7 @@
 .expense_btn {
   min-width: 120px;
   height: 44px;
-  box-shadow: 1px 3px 5px 0 rgba(255, 107, 8, 0.35);
+  box-shadow: 1px 3px 5px 0 variables.getColor(buttonAccent-shadow);
   font-weight: 700;
   font-size: 12px;
   letter-spacing: 0.02em;
@@ -213,7 +213,7 @@
 .clear_btn {
   min-width: 120px;
   height: 44px;
-  box-shadow: 1px 2px 5px 0 rgba(170, 178, 197, 0.4);
+  box-shadow: 1px 2px 5px 0 variables.getColor(menu-shadow);
   font-weight: 700;
   font-size: 12px;
   letter-spacing: 0.02em;
@@ -237,7 +237,7 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #ff751d;
+    background: variables.getColor(accent-color);
     border-radius: 10px;
   }
 
@@ -269,10 +269,10 @@
 
   @media (min-width: 768px) {
     display: table-row;
-    background-color: #f5f6fb;
+    background-color: variables.getColor(white-secondary);
 
     th {
-      background: #f5f6fb;
+      background: variables.getColor(white-secondary);
 
       padding: 12px 10px;
       text-align: left;
@@ -295,7 +295,7 @@
   row-gap: 4px;
 
   background: variables.getColor(white-primary);
-  border-bottom: 1px solid #f5f6fb;
+  border-bottom: 1px solid variables.getColor(white-secondary);
   padding: 12px 20px;
 
   td {
@@ -314,7 +314,7 @@
       display: table-cell;
       padding: 14px 10px;
       vertical-align: middle;
-      border-bottom: 1px solid #f5f6fb;
+      border-bottom: 1px solid variables.getColor(white-secondary);
     }
   }
 }
@@ -374,7 +374,7 @@
 }
 
 .incomesText {
-  color: #407946;
+  color: variables.getColor(green-secondary);
 }
 
 .deleteTd {
@@ -395,7 +395,7 @@
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: #f5f6fb;
+    background-color: variables.getColor(white-secondary);
   }
 
   svg {
@@ -417,7 +417,7 @@
 
 .calendarIcon {
   font-size: 26px;
-  color: #52555f;
+  color: variables.getColor(text-secondary);
 }
 
 .dateValue {
@@ -425,7 +425,7 @@
   font-size: 12px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #52555f;
+  color: variables.getColor(text-secondary);
 }
 
 .resultsTable {
@@ -433,7 +433,7 @@
   border-collapse: collapse;
   width: 100%;
   max-width: 270px;
-  background-color: #f5f6fb;
+  background-color: variables.getColor(white-secondary);
   border-radius: 20px 20px 20px 0;
   overflow: hidden;
 
@@ -450,7 +450,7 @@
 
 .resultsTableHead {
   width: 100%;
-  border-bottom: 2px solid #fff;
+  border-bottom: 2px solid variables.getColor(white-primary);
 }
 
 .resultsTableHeadTitle {
@@ -464,12 +464,12 @@
 }
 
 .resultsTableBody {
-  background-color: #f5f6fb;
+  background-color: variables.getColor(white-secondary);
 }
 
 .resultsTableContainer {
   height: 38px;
-  border-bottom: 2px solid #ffffff;
+  border-bottom: 2px solid variables.getColor(white-primary);
 
   &:last-child {
     border-bottom: none;
@@ -593,4 +593,4 @@
     border-color: variables.getColor(text-secondary);
     border-width: 2px;
   }
-}
+} 

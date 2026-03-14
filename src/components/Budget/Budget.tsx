@@ -21,17 +21,12 @@ export default function Budget({
 }: BudgetProps) {
   const dispatch = useTypificatedDispatch();
 
-  useEffect(() => {
-    dispatch(getBudget());
-    setNewBudget(String(budget));
-  }, [budget]);
-
-  const handleBudget = async () => {
-    try {
-      if (Number(newBudget) === 0) {
-        toast.warning("Баланс не можна змінити на 0");
-        return;
-      }
+    const handleBudget = async () => {
+        try {
+            if (Number(newBudget) === budget) {
+                toast.warning("Баланс має змінитися")
+                return
+            }
 
       if (Number(newBudget) === budget) {
         toast.warning("Баланс має змінитися");
