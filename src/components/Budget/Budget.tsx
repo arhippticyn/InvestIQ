@@ -24,11 +24,6 @@ export default function Budget({ newBudget, setNewBudget, budget }: BudgetProps)
 
     const handleBudget = async () => {
         try {
-            if (Number(newBudget) === 0) {
-                toast.warning("Баланс не можна змінити на 0")
-                return
-            }
-
             if (Number(newBudget) === budget) {
                 toast.warning("Баланс має змінитися")
                 return

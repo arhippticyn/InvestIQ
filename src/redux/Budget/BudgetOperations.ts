@@ -17,7 +17,7 @@ export const updateBudget = createAsyncThunk<number, number>(
     'budget/update',
     async (budget, { rejectWithValue }) => {
         try {
-            const res = await api.patch('/profile/budget', budget)
+            const res = await api.patch('/profile/budget', { new_budget: budget })
 
             return res.data
         } catch (err) {
