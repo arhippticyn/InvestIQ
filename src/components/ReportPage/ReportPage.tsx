@@ -47,7 +47,7 @@ const months = [
 
 const categoryIcons: Record<string, string> = {
   Продукти: iconFood,
-  Алкоголь: iconClay,
+  Алкоголь: iconAlcohol,
   Транспорт: iconCar,
   "Здоров’я": iconHeart,
   Розваги: iconKite,
@@ -55,8 +55,8 @@ const categoryIcons: Record<string, string> = {
   "Все для дому": iconCouch,
   Техніка: iconTools,
   "Комуналка, зв'язок": iconInvoice,
-  "Спорт, хобі": iconKite,
-  Навчання: iconInvoice,
+  "Спорт, хобі": iconClay,
+  Навчання: iconBook,
   Інше: iconUfo,
   Зарплата: iconInvoice,
   "Дод. прибуток": iconInvoice,
@@ -91,19 +91,13 @@ export default function ReportPage() {
   const dispatch = useTypificatedDispatch();
 
   const budget = useTypificatedSelector(selectBudget);
-  const finances = useTypificatedSelector(selectFinances);
   const categories = useTypificatedSelector(selectCategories);
 
-  const [newBudget, setNewBudget] = useState<string>(String(budget));
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [activeType, setActiveType] = useState<FinanceType>("expense");
 
   const [expenses, setExpenses] = useState<FinanceItem[]>([]);
   const [incomes, setIncomes] = useState<FinanceItem[]>([]);
-
-  useEffect(() => {
-    setNewBudget(String(budget));
-  }, [budget]);
 
   useEffect(() => {
     const fetchFinances = async () => {
@@ -223,16 +217,16 @@ export default function ReportPage() {
             <span className={styles.reportGoBackIcon}>
               <FaArrowLeftLong />
             </span>
-            Повернутись на головну
           </Link>
         </div>
         <div className={styles.reportWrapper}>
-          <Budget
-            newBudget={newBudget}
-            setNewBudget={setNewBudget}
-            budget={budget}
-          ></Budget>
+          <div className={styles.reportBalance}>
+            <p className={styles.reportBalanceLabel}>Баланс:</p>
 
+            <div className={styles.reportBalanceValue}>
+              {Number(budget).toFixed(2)} UAH
+            </div>
+          </div>
           <div className={styles.reportDateSwitch}>
             <p className={styles.reportDateParagraph}>Поточний період</p>
             <div className={styles.reportDateSwitchButtons}>

@@ -45,7 +45,7 @@ function App() {
             }
           />
           <Route
-            path="/home/chart"
+            path="/home/report"
             element={
               <ProtectedRoute>
                 <ReportPage />
