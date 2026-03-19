@@ -1,5 +1,6 @@
 import { selectBudget } from "../../redux/Budget/BudgetSelectors";
 import { selectCategories } from "../../redux/Category/CategorySelectors";
+import { GetAllCategory } from "../../redux/Category/CategoryOperation";
 import {
   GetAllFinances,
   type FinanceType,
@@ -17,6 +18,17 @@ import styles from "../../sass/components/ReportPage/ReportPage.module.scss";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { RiArrowDropLeftLine } from "react-icons/ri";
 import { RiArrowDropRightLine } from "react-icons/ri";
+import iconAlcohol from "../../assets/Report/alcohol.svg";
+import iconBook from "../../assets/Report/book.svg";
+import iconCar from "../../assets/Report/car.svg";
+import iconClay from "../../assets/Report/clay.svg";
+import iconCouch from "../../assets/Report/couch.svg";
+import iconFood from "../../assets/Report/food.svg";
+import iconHeart from "../../assets/Report/heart.svg";
+import iconInvoice from "../../assets/Report/invoice.svg";
+import iconKite from "../../assets/Report/kite.svg";
+import iconTools from "../../assets/Report/tools.svg";
+import iconUfo from "../../assets/Report/ufo.svg";
 
 const months = [
   "СІЧЕНЬ",
@@ -33,7 +45,30 @@ const months = [
   "ГРУДЕНЬ",
 ];
 
-type ExpensesByCategoryType = Record<string, number>;
+const categoryIcons: Record<string, string> = {
+  Продукти: iconFood,
+  Транспорт: iconCar,
+  "Здоров'я": iconHeart,
+  Розваги: iconKite,
+  Алкоголь: iconClay,
+  "Все для дому": iconCouch,
+  Техніка: iconTools,
+  "Комуналка, зв'язок": iconInvoice,
+  "Спорт, хобі": iconKite,
+  Навчання: iconInvoice,
+  Інше: iconUfo,
+  Зарплата: iconInvoice,
+  "Дод. прибуток": iconInvoice,
+};
+type AmountByCategoryType = Record<string, number>;
+
+type FinanceItem = {
+  id: number | string;
+  amount: number;
+  date: string;
+  category_id: number;
+  description?: string;
+};
 
 export default function ReportPage() {
   const dispatch = useTypificatedDispatch();
@@ -44,17 +79,34 @@ export default function ReportPage() {
 
   const [newBudget, setNewBudget] = useState<string>(String(budget));
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [activeType, setActiveType] = useState<"expense" | "incomes">(
-    "expense",
-  );
+  const [activeType, setActiveType] = useState<FinanceType>("expense");
+
+  const [expenses, setExpenses] = useState<FinanceItem[]>([]);
+  const [incomes, setIncomes] = useState<FinanceItem[]>([]);
 
   useEffect(() => {
     setNewBudget(String(budget));
   }, [budget]);
 
   useEffect(() => {
-    dispatch(GetAllFinances(activeType));
-  }, [dispatch, activeType]);
+    const fetchFinances = async () => {
+      try {
+        const expenseData = await dispatch(GetAllFinances("expense")).unwrap();
+        const incomeData = await dispatch(GetAllFinances("incomes")).unwrap();
+
+        setExpenses(expenseData);
+        setIncomes(incomeData);
+      } catch (error) {
+        console.error("Не вдалося завантажити фінанси", error);
+      }
+    };
+
+    fetchFinances();
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(GetAllCategory());
+  }, [dispatch]);
 
   const handlePrevMonth = () => {
     setCurrentMonth(
@@ -77,33 +129,53 @@ export default function ReportPage() {
     );
   }, [currentMonth]);
 
-  const filteredFinances = useMemo(() => {
-    return finances.filter((finance) => {
-      const date = new Date(finance.date);
+  const monthExpenses = useMemo(() => {
+    return expenses.filter((item) => {
+      const date = new Date(item.date);
 
       return (
         date.getMonth() === currentMonth.getMonth() &&
         date.getFullYear() === currentMonth.getFullYear()
       );
     });
-  }, [finances, currentMonth]);
+  }, [expenses, currentMonth]);
+
+  const monthIncomes = useMemo(() => {
+    return incomes.filter((item) => {
+      const date = new Date(item.date);
+
+      return (
+        date.getMonth() === currentMonth.getMonth() &&
+        date.getFullYear() === currentMonth.getFullYear()
+      );
+    });
+  }, [incomes, currentMonth]);
+
+  const totalExpenses = useMemo(() => {
+    return monthExpenses.reduce((sum, item) => sum + item.amount, 0);
+  }, [monthExpenses]);
+
+  const totalIncomes = useMemo(() => {
+    return monthIncomes.reduce((sum, item) => sum + item.amount, 0);
+  }, [monthIncomes]);
+
+  const visibleFinances = useMemo(() => {
+    return activeType === "expense" ? monthExpenses : monthIncomes;
+  }, [activeType, monthExpenses, monthIncomes]);
 
   const amountByCategory = useMemo(() => {
-    return filteredFinances.reduce(
-      (acc, item) => {
-        const category = categories.find((cat) => cat.id === item.category_id);
-        const categoryName = category?.name || "Без категорії";
+    return visibleFinances.reduce((acc, item) => {
+      const category = categories.find((cat) => cat.id === item.category_id);
+      const categoryName = category?.name || "Інше";
 
-        if (!acc[categoryName]) {
-          acc[categoryName] = 0;
-        }
+      if (!acc[categoryName]) {
+        acc[categoryName] = 0;
+      }
 
-        acc[categoryName] += item.amount;
-        return acc;
-      },
-      {} as Record<string, number>,
-    );
-  }, [filteredFinances, categories]);
+      acc[categoryName] += item.amount;
+      return acc;
+    }, {} as AmountByCategoryType);
+  }, [visibleFinances, categories]);
 
   return (
     <>
@@ -111,41 +183,115 @@ export default function ReportPage() {
 
       <section className={styles.report}>
         <div className={styles.reportGoBack}>
-          <button className={styles.reportGoBackButton}>
+          <Link to="/home" className={styles.reportGoBackButton}>
             <span className={styles.reportGoBackIcon}>
-              <FaArrowLeftLong></FaArrowLeftLong>
+              <FaArrowLeftLong />
             </span>
             Повернутись на головну
-          </button>
+          </Link>
+        </div>
+        <div className={styles.reportWrapper}>
+          <Budget
+            newBudget={newBudget}
+            setNewBudget={setNewBudget}
+            budget={budget}
+          ></Budget>
+
+          <div className={styles.reportDateSwitch}>
+            <p className={styles.reportDateParagraph}>Поточний період</p>
+            <div className={styles.reportDateSwitchButtons}>
+              <button
+                className={styles.reportDatePrevMonth}
+                onClick={handlePrevMonth}
+              >
+                <RiArrowDropLeftLine></RiArrowDropLeftLine>
+              </button>
+
+              <p className={styles.reportDateCurrentDate}>
+                {months[currentMonth.getMonth()]} {currentMonth.getFullYear()}
+              </p>
+
+              <button
+                className={styles.reportDateNextMonth}
+                onClick={handleNextMonth}
+                disabled={isCurrentMonth}
+              >
+                <RiArrowDropRightLine></RiArrowDropRightLine>
+              </button>
+            </div>
+          </div>
         </div>
 
-        <Budget
-          newBudget={newBudget}
-          setNewBudget={setNewBudget}
-          budget={budget}
-        ></Budget>
-
-        <div className={styles.reportDateSwitch}>
-          <p className={styles.reportDateParagraph}>Поточний період</p>
-          <div className={styles.reportDateSwitchButtons}>
-            <button
-              className={styles.reportDatePrevMonth}
-              onClick={handlePrevMonth}
+        <div className={styles.reportSummary}>
+          <div className={styles.reportSummaryItem}>
+            <span className={styles.reportSummaryLabel}>Витрати:</span>
+            <span
+              className={`${styles.reportSummaryValue} ${styles.reportSummaryExpense}`}
             >
-              <RiArrowDropLeftLine></RiArrowDropLeftLine>
+              - {totalExpenses.toFixed(2)} грн.
+            </span>
+          </div>
+
+          <div className={styles.reportSummaryDivider} />
+
+          <div className={styles.reportSummaryItem}>
+            <span className={styles.reportSummaryLabel}>Доходи:</span>
+            <span
+              className={`${styles.reportSummaryValue} ${styles.reportSummaryIncome}`}
+            >
+              + {totalIncomes.toFixed(2)} грн.
+            </span>
+          </div>
+        </div>
+        <div className={styles.reportContent}>
+          <div className={styles.reportContentHeader}>
+            <button
+              type="button"
+              className={styles.reportSwitchBtn}
+              onClick={() => setActiveType("expense")}
+              disabled={activeType === "expense"}
+            >
+              <RiArrowDropLeftLine />
             </button>
 
-            <p className={styles.reportDateCurrentDate}>
-              {months[currentMonth.getMonth()]} {currentMonth.getFullYear()}
-            </p>
+            <h2 className={styles.reportContentTitle}>
+              {activeType === "expense" ? "ВИТРАТИ" : "ДОХОДИ"}
+            </h2>
 
             <button
-              className={styles.reportDateNextMonth}
-              onClick={handleNextMonth}
-              disabled={isCurrentMonth}
+              type="button"
+              className={styles.reportSwitchBtn}
+              onClick={() => setActiveType("incomes")}
+              disabled={activeType === "incomes"}
             >
-              <RiArrowDropRightLine></RiArrowDropRightLine>
+              <RiArrowDropRightLine />
             </button>
+          </div>
+
+          <div className={styles.reportCategories}>
+            {Object.entries(amountByCategory).length === 0 ? (
+              <p className={styles.reportEmpty}>
+                Братік не юзав ти нашу прогу цього місяця, айайай
+              </p>
+            ) : (
+              Object.entries(amountByCategory).map(([categoryName, amount]) => (
+                <div className={styles.reportCategoryCard} key={categoryName}>
+                  <p className={styles.reportCategoryAmount}>
+                    {amount.toFixed(2)}
+                  </p>
+
+                  <div className={styles.reportCategoryIcon}>
+                    <img
+                      src={categoryIcons[categoryName]}
+                      alt={categoryName}
+                      className={styles.reportCategoryIconImage}
+                    />
+                  </div>
+
+                  <p className={styles.reportCategoryName}>{categoryName}</p>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </section>
