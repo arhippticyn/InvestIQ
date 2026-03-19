@@ -47,10 +47,11 @@ const months = [
 
 const categoryIcons: Record<string, string> = {
   Продукти: iconFood,
+  Алкоголь: iconClay,
   Транспорт: iconCar,
   "Здоров’я": iconHeart,
   Розваги: iconKite,
-  Алкоголь: iconClay,
+
   "Все для дому": iconCouch,
   Техніка: iconTools,
   "Комуналка, зв'язок": iconInvoice,
@@ -69,6 +70,22 @@ type FinanceItem = {
   category_id: number;
   description?: string;
 };
+
+const expenseOrder = [
+  "Продукти",
+  "Алкоголь",
+  "Розваги",
+  "Здоров’я",
+  "Транспорт",
+  "Все для дому",
+  "Техніка",
+  "Комуналка, зв'язок",
+  "Спорт, хобі",
+  "Навчання",
+  "Інше",
+];
+
+const incomeOrder = ["Зарплата", "Дод. прибуток"];
 
 export default function ReportPage() {
   const dispatch = useTypificatedDispatch();
@@ -178,16 +195,21 @@ export default function ReportPage() {
   }, [visibleFinances, categories]);
 
   const visibleCategories = useMemo(() => {
-    if (activeType === "incomes") {
-      return categories.filter(
-        (category) =>
-          category.name === "Зарплата" || category.name === "Дод. прибуток",
-      );
-    }
+    const order = activeType === "incomes" ? incomeOrder : expenseOrder;
 
-    return categories.filter(
-      (category) =>
-        category.name !== "Зарплата" && category.name !== "Дод. прибуток",
+    const filteredCategories =
+      activeType === "incomes"
+        ? categories.filter(
+            (category) =>
+              category.name === "Зарплата" || category.name === "Дод. прибуток",
+          )
+        : categories.filter(
+            (category) =>
+              category.name !== "Зарплата" && category.name !== "Дод. прибуток",
+          );
+
+    return filteredCategories.sort(
+      (a, b) => order.indexOf(a.name) - order.indexOf(b.name),
     );
   }, [categories, activeType]);
 
