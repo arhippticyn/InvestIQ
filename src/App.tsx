@@ -49,11 +49,7 @@ function App() {
             element={
               <ProtectedRoute>
                 <ReportPage />
-                <FinanceChart
-                  type={"incomes"}
-                  month={"March"}
-                  year={2026}
-                />{" "}
+                <FinanceChart type={"incomes"} month={"March"} year={2026} />
               </ProtectedRoute>
             }
           />

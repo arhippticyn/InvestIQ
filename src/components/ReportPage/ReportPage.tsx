@@ -5,8 +5,6 @@ import {
   GetAllFinances,
   type FinanceType,
 } from "../../redux/Finance/FinanceOperation";
-import { selectFinances } from "../../redux/Finance/FinanceSelectors";
-import Budget from "../Budget/Budget";
 import Header from "../Header/Header";
 import { Link } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
@@ -54,7 +52,7 @@ const categoryIcons: Record<string, string> = {
 
   "Все для дому": iconCouch,
   Техніка: iconTools,
-  "Комуналка, зв'язок": iconInvoice,
+  "Комуналка, зв’язок": iconInvoice,
   "Спорт, хобі": iconClay,
   Навчання: iconBook,
   Інше: iconUfo,
@@ -79,7 +77,7 @@ const expenseOrder = [
   "Транспорт",
   "Все для дому",
   "Техніка",
-  "Комуналка, зв'язок",
+  "Комуналка, зв’язок",
   "Спорт, хобі",
   "Навчання",
   "Інше",
@@ -300,7 +298,7 @@ export default function ReportPage() {
 
           <div className={styles.reportCategories}>
             {visibleCategories.length === 0 ? (
-              <p className={styles.reportEmpty}>Категорії немає</p>
+              <p className={styles.reportEmpty}>Категорій нема</p>
             ) : (
               visibleCategories.map((category) => {
                 const amount = amountByCategory[category.name] || 0;
