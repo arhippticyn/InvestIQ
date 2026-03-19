@@ -48,7 +48,7 @@ const months = [
 const categoryIcons: Record<string, string> = {
   Продукти: iconFood,
   Транспорт: iconCar,
-  "Здоров'я": iconHeart,
+  "Здоров’я": iconHeart,
   Розваги: iconKite,
   Алкоголь: iconClay,
   "Все для дому": iconCouch,
@@ -177,6 +177,20 @@ export default function ReportPage() {
     }, {} as AmountByCategoryType);
   }, [visibleFinances, categories]);
 
+  const visibleCategories = useMemo(() => {
+    if (activeType === "incomes") {
+      return categories.filter(
+        (category) =>
+          category.name === "Зарплата" || category.name === "Дод. прибуток",
+      );
+    }
+
+    return categories.filter(
+      (category) =>
+        category.name !== "Зарплата" && category.name !== "Дод. прибуток",
+    );
+  }, [categories, activeType]);
+
   return (
     <>
       <Header></Header>
@@ -269,28 +283,30 @@ export default function ReportPage() {
           </div>
 
           <div className={styles.reportCategories}>
-            {Object.entries(amountByCategory).length === 0 ? (
-              <p className={styles.reportEmpty}>
-                Братік не юзав ти нашу прогу цього місяця, айайай
-              </p>
+            {visibleCategories.length === 0 ? (
+              <p className={styles.reportEmpty}>Категорії немає</p>
             ) : (
-              Object.entries(amountByCategory).map(([categoryName, amount]) => (
-                <div className={styles.reportCategoryCard} key={categoryName}>
-                  <p className={styles.reportCategoryAmount}>
-                    {amount.toFixed(2)}
-                  </p>
+              visibleCategories.map((category) => {
+                const amount = amountByCategory[category.name] || 0;
 
-                  <div className={styles.reportCategoryIcon}>
-                    <img
-                      src={categoryIcons[categoryName]}
-                      alt={categoryName}
-                      className={styles.reportCategoryIconImage}
-                    />
+                return (
+                  <div className={styles.reportCategoryCard} key={category.id}>
+                    <p className={styles.reportCategoryAmount}>
+                      {amount.toFixed(2)}
+                    </p>
+
+                    <div className={styles.reportCategoryIcon}>
+                      <img
+                        src={categoryIcons[category.name]}
+                        alt={category.name}
+                        className={styles.reportCategoryIconImage}
+                      />
+                    </div>
+
+                    <p className={styles.reportCategoryName}>{category.name}</p>
                   </div>
-
-                  <p className={styles.reportCategoryName}>{categoryName}</p>
-                </div>
-              ))
+                );
+              })
             )}
           </div>
         </div>
