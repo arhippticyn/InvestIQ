@@ -41,6 +41,11 @@ export default function Budget({
     }
   };
 
+  useEffect(() => {
+    dispatch(getBudget());
+    setNewBudget(String(budget));
+  }, [budget]);
+
   return (
     <>
       <div className={styles.mobileContainer}>
