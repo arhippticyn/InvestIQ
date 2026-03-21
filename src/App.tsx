@@ -2,8 +2,6 @@ import { Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect, Suspense, lazy } from "react";
 import Loader from "./components/Loader/Loader";
-import FinanceChart from "./components/Chart/Chart";
-import ReportPage from "./components/ReportPage/ReportPage";
 
 const Auth = lazy(() => import("./components/Auth/Auth"));
 const Home = lazy(() => import("./pages/Home"));
@@ -13,12 +11,12 @@ const ProtectedRoute = lazy(
 const NotFound = lazy(() => import("./components/NotFound/NotFound"));
 const Profile = lazy(() => import("./components/Profile/Profile"));
 const Modal = lazy(() => import("./components/Modal/Modal"));
-const Report = lazy(() => import("./components/ReportPage/ReportPage"));
+const ReportPage = lazy(() => import("./components/ReportPage/ReportPage"));
 
 function App() {
   const navigate = useNavigate();
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   return (
     <>
@@ -49,7 +47,6 @@ function App() {
             element={
               <ProtectedRoute>
                 <ReportPage />
-                <FinanceChart type={"incomes"} month={"March"} year={2026} />
               </ProtectedRoute>
             }
           />

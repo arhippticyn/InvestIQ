@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useTypificatedDispatch, useTypificatedSelector } from '../../hooks/hooks';
+import { useMemo, useEffect, useState } from 'react';
+import { useTypificatedSelector, useTypificatedDispatch } from '../../hooks/hooks';
 import { selectFinances } from '../../redux/Finance/FinanceSelectors';
 import { GetAllFinances } from '../../redux/Finance/FinanceOperation';
 import {
@@ -13,6 +13,7 @@ import {
 } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Bar } from 'react-chartjs-2';
+import styles from '../../sass/components/Chart/Chart.module.scss';
 
 ChartJS.register(
     CategoryScale,
@@ -24,115 +25,122 @@ ChartJS.register(
     ChartDataLabels
 );
 
-type Month = 'January' | 'February' | 'March' | 'April' | 'May' | 'June' | 'July' | 'August' | 'September' | 'October' | 'November' | 'December';
-
 interface FinanceChartProps {
-    type: 'incomes' | 'expense',
-    month: Month,
-    year: number
+    type: 'incomes' | 'expense';
+    month: number;
+    year: number;
 }
 
-// interface FinanceChartData {
-//     name: string,
-//     price: number
-// }
+export default function FinanceChart({ type = 'expense', month, year }: FinanceChartProps) {
+    const allFinances = useTypificatedSelector(selectFinances);
+    const dispatch = useTypificatedDispatch();
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
-export default function FinanceChart({ type, month, year }: FinanceChartProps) {
-    const data = useTypificatedSelector(selectFinances)
-    const dispatch = useTypificatedDispatch()
-    const MONTH_INDEX = {
-        January: 1,
-        February: 2,
-        March: 3,
-        April: 4,
-        May: 5,
-        June: 6,
-        July: 7,
-        August: 8,
-        September: 9,
-        October: 10,
-        November: 11,
-        December: 12
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    useEffect(() => {
+        dispatch(GetAllFinances(type));
+    }, [dispatch, type, month, year]);
+
+    const chartDataData = useMemo(() => {
+        const filtered = allFinances.filter((item) => {
+            const d = new Date(item.date);
+            return d.getMonth() === month && d.getFullYear() === year;
+        });
+        return filtered.sort((a, b) => b.amount - a.amount);
+    }, [allFinances, month, year]);
+
+    if (chartDataData.length === 0) {
+        return (
+            <section className={styles.chart}>
+                <div className={styles.container} >
+                    <p className={styles.text}>
+                        Немає даних за цей період
+                    </p>
+                </div>
+            </section>
+        );
     }
 
-    const filteredData = data.filter((item) => {
-        const d = new Date(item.date)
-
-        return (
-            d.getMonth() + 1 === MONTH_INDEX[month] &&
-            d.getFullYear() === year
-        )
-    })
-
-    const maxValue = Math.max(...filteredData.map(i => i.amount), 0)
-
-    const chartData = {
-        labels: filteredData.map(item => item.description),
+    const data = {
+        labels: chartDataData.map(item => item.description || "Інше"),
         datasets: [
             {
-                data: filteredData.map(item => item.amount),
-                backgroundColor: '#ff751d',
-                borderRadius: 10,
-                categoryPercentage: 0.5,
-                barPercentage: 0.8,
+                data: chartDataData.map(item => item.amount),
+                backgroundColor: '#FF751D',
+                borderRadius: isMobile ? 5 : 10,
+                barThickness: isMobile ? 15 : 38,
+                maxBarThickness: 40,
             },
         ],
     };
 
     const options = {
+        indexAxis: isMobile ? ('y' as const) : ('x' as const),
         responsive: true,
         maintainAspectRatio: false,
-
-        plugins: {
-            legend: {
-                display: false
-            },
-
-            datalabels: {
-                anchor: 'end',
-                align: 'top',
-                color: '#111',
-                font: {
-                    weight: 'bold',
-                    size: 14
-                },
-                formatter: (value: number) => `${value} грн`
-            },
-
-            tooltip: {
-                enabled: true
-            }
+        layout: {
+            padding: isMobile
+                ? { left: 50, right: 40 }
+                : { top: 30, left: 10, right: 10, bottom: 20 }
         },
+        plugins: {
+            legend: { display: false },
+            tooltip: { enabled: true },
+            datalabels: {
+                anchor: 'end' as const,
+                align: isMobile ? ('top' as const) : ('top' as const),
+                color: '#52555F',
+                font: { size: 12, family: 'Roboto' },
+                formatter: (value: number) => `${value} грн`,
 
+                labels: isMobile ? {
+                    title: {
+                        formatter: (_value: any, context: any) => context.chart.data.labels[context.dataIndex],
+                        align: 'top' as const,
+                        anchor: 'start' as const,
+                        padding: { bottom: 10 },
+                        font: { size: 12, family: 'Roboto' },
+                        color: '#52555F',
+                    },
+                    value: {
+                        formatter: (value: number) => `${value} грн`,
+                        align: 'bottom' as const,
+                        anchor: 'end' as const,
+                        padding: { bottom: 10 },
+                        font: { size: 12, family: 'Roboto' },
+                        color: '#52555F',
+                    }
+                } : {}
+            },
+        },
         scales: {
             x: {
-                grid: {
-                    display: false
+                display: !isMobile,
+                grid: { display: false },
+                border: { display: false },
+                ticks: {
+                    color: '#52555F',
+                    font: { size: 12 }
                 }
             },
-
             y: {
                 display: false,
-                min: 0,
-                suggestedMax: maxValue * 1.4
+                grid: { display: false },
+                border: { display: false }
             }
         }
-    } as const;
-
-    useEffect(() => {
-        dispatch(GetAllFinances(type))
-
-    }, [type, month])
-
-
-
+    };
 
     return (
-        <>
-            <div style={{ marginTop: '100px', width: '758px' }}>
-                <Bar data={chartData} options={options} />
+        <section className={styles.chart}>
+            <div className={styles.container}>
+                <Bar data={data} options={options} className={styles.Bar} />
             </div>
-        </>
-    )
-
+        </section>
+    );
 }
