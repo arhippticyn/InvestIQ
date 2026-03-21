@@ -136,10 +136,20 @@ export default function FinanceChart({ type = 'expense', month, year }: FinanceC
         }
     };
 
+    const barSize = isMobile ? 50 : 80;
+    const dynamicSize = chartDataData.length * barSize;
+
     return (
         <section className={styles.chart}>
-            <div className={styles.container}>
-                <Bar data={data} options={options} className={styles.Bar} />
+            <div
+                className={styles.container}
+                style={{
+                    height: isMobile ? `${dynamicSize}px` : '400px',
+                    minWidth: !isMobile ? `${dynamicSize}px` : 'auto',
+                    overflowX: !isMobile ? 'auto' : 'visible'
+                }}
+            >
+                <Bar data={data} options={options} />
             </div>
         </section>
     );
