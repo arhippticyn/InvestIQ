@@ -26,9 +26,9 @@ ChartJS.register(
 );
 
 interface FinanceChartProps {
-    type: 'incomes' | 'expense';
-    month: number;
-    year: number;
+    type: 'incomes' | 'expense',
+    month: number,
+    year: number,
 }
 
 export default function FinanceChart({ type = 'expense', month, year }: FinanceChartProps) {
