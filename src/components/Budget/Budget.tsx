@@ -7,6 +7,7 @@ import { toast, ToastContainer } from "react-toastify";
 import styles from "../../sass/components/Budget/Budget.module.scss";
 import "react-toastify/dist/ReactToastify.css";
 import { SlChart } from "react-icons/sl";
+import { Link } from "react-router-dom";
 
 interface BudgetProps {
   newBudget: string;
@@ -21,12 +22,12 @@ export default function Budget({
 }: BudgetProps) {
   const dispatch = useTypificatedDispatch();
 
-    const handleBudget = async () => {
-        try {
-            if (Number(newBudget) === budget) {
-                toast.warning("Баланс має змінитися")
-                return
-            }
+  const handleBudget = async () => {
+    try {
+      if (Number(newBudget) === budget) {
+        toast.warning("Баланс має змінитися");
+        return;
+      }
 
       if (Number(newBudget) === budget) {
         toast.warning("Баланс має змінитися");
@@ -40,13 +41,18 @@ export default function Budget({
     }
   };
 
+  useEffect(() => {
+    dispatch(getBudget());
+    setNewBudget(String(budget));
+  }, [budget]);
+
   return (
     <>
       <div className={styles.mobileContainer}>
         <div className={styles.mobileChart}>
-          <button className={styles.mobileChartParagraph}>
+          <Link to={"/home/report"} className={styles.mobileChartParagraph}>
             Перейти до розрахунків {<SlChart></SlChart>}
-          </button>
+          </Link>
         </div>
 
         <div className={styles.container}>
