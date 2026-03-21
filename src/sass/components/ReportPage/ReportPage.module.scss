@@ -2,6 +2,7 @@
 
 .report {
   background-color: variables.getColor("categoriesBlue");
+
   &Container {
     @media (min-width: 768px) {
       margin: 0 auto;
@@ -13,12 +14,14 @@
       max-width: 1060px;
     }
   }
+
   &GoBackIcon {
     color: variables.getColor("accent-color");
     font-size: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 10px;
   }
 
   &GoBackText {
@@ -30,15 +33,20 @@
   }
 
   &GoBackButton {
+    padding: 20px 00 0 20px;
+    display: flex;
+    align-items: flex-start;
+
     @media (min-width: 768px) {
-      display: flex;
+      paddingt: 0;
       align-items: center;
       color: variables.getColor("text-secondary");
       gap: 15px;
     }
   }
+
   &Container {
-    padding: 0 19px;
+
     @media (min-width: 768px) {
       padding: 40px 0 30px 0;
     }
@@ -51,6 +59,7 @@
       width: 100%;
       justify-content: center;
     }
+
     @media (min-width: 1280px) {
       gap: 206px;
     }
@@ -60,12 +69,15 @@
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
+    justify-content: center;
+
     @media (min-width: 768px) {
       flex-direction: row;
       gap: 80px;
     }
+
     @media (min-width: 1280px) {
-      gap: 264px;
+      gap: 304px;
     }
   }
 
@@ -74,13 +86,11 @@
   }
 
   &DateSwitch {
-    max-width: 134px;
+    min-width: 134px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    @media (min-width: 768px) {
-      gap: 5px;
-    }
+    gap: 5px;
   }
 
   &DateSwitchButtons {
@@ -115,6 +125,7 @@
     &Label {
       color: variables.getColor("text-secondary");
     }
+
     @media (min-width: 768px) {
       max-width: 229px;
       width: 100%;
@@ -135,6 +146,7 @@
     display: flex;
     margin-bottom: 40px;
     justify-content: space-between;
+
     @media (min-width: 768px) {
       justify-content: center;
       gap: 40px;
@@ -142,34 +154,46 @@
       width: 100%;
       margin-bottom: 30px;
     }
+
     &Item {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 5px;
+
       @media (min-width: 768px) {
         flex-direction: row;
         gap: 15px;
       }
     }
+
     &Label {
       color: variables.getColor("text-secondary");
       font-size: 14px;
       font-weight: 700;
     }
+
     &Expense {
       color: variables.getColor("error");
     }
+
     &Income {
       color: variables.getColor("green-secondary");
     }
+
     &Value {
       font-weight: 700;
     }
   }
 
   &Content {
+    background-color: #f9f9f9;
     box-shadow: 0 10px 60px 0 rgba(170, 178, 197, 0.2);
+    padding: 15px 0;
+
+    @media (min-width: 768px) {
+      border-radius: 30px;
+    }
 
     &Switch {
       display: flex;
@@ -237,6 +261,7 @@
     width: 284px;
     height: 1px;
     background-color: variables.getColor("logout-color");
+
     @media (min-width: 768px) {
       display: none;
     }

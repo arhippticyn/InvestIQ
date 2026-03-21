@@ -29,6 +29,7 @@ import iconTools from "../../assets/Report/tools.svg";
 import iconUfo from "../../assets/Report/ufo.svg";
 import iconSalary from "../../assets/Report/salary.svg";
 import iconAdditionalSalary from "../../assets/Report/additionalSalary.svg";
+import FinanceChart from "../Chart/Chart";
 const months = [
   "СІЧЕНЬ",
   "ЛЮТИЙ",
@@ -101,8 +102,8 @@ export default function ReportPage() {
   useEffect(() => {
     const fetchFinances = async () => {
       try {
-        const expenseData = await dispatch(GetAllFinances("expense")).unwrap();
         const incomeData = await dispatch(GetAllFinances("incomes")).unwrap();
+        const expenseData = await dispatch(GetAllFinances("expense")).unwrap();
 
         setExpenses(expenseData);
         setIncomes(incomeData);
@@ -193,13 +194,13 @@ export default function ReportPage() {
     const filteredCategories =
       activeType === "incomes"
         ? categories.filter(
-            (category) =>
-              category.name === "Зарплата" || category.name === "Дод. прибуток",
-          )
+          (category) =>
+            category.name === "Зарплата" || category.name === "Дод. прибуток",
+        )
         : categories.filter(
-            (category) =>
-              category.name !== "Зарплата" && category.name !== "Дод. прибуток",
-          );
+          (category) =>
+            category.name !== "Зарплата" && category.name !== "Дод. прибуток",
+        );
 
     return filteredCategories.sort(
       (a, b) => order.indexOf(a.name) - order.indexOf(b.name),
@@ -339,6 +340,12 @@ export default function ReportPage() {
           </div>
         </div>
       </section>
+
+      <FinanceChart
+        type={activeType}
+        month={currentMonth.getMonth()}
+        year={currentMonth.getFullYear()}
+      />
     </>
   );
 }
