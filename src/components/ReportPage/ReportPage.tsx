@@ -21,7 +21,7 @@ import iconBook from "../../assets/Report/book.svg";
 import iconCar from "../../assets/Report/car.svg";
 import iconClay from "../../assets/Report/clay.svg";
 import iconCouch from "../../assets/Report/couch.svg";
-import iconFood from "../../assets/Report/food.svg";
+import iconFood from "../../assets/Report/Food.svg";
 import iconHeart from "../../assets/Report/heart.svg";
 import iconInvoice from "../../assets/Report/invoice.svg";
 import iconKite from "../../assets/Report/kite.svg";
